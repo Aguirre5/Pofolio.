@@ -1,6 +1,29 @@
 import click
 
-from flask import Flask
+# Flask.
+from flask import (
+    Flask,
+    render_template,
+    redirect,
+    url_for,
+    flash,
+    abort
+)
+
+# Herramientas para administrar sesiones de usuarios.
+from flask_login import (
+    LoginManager,
+    login_user,
+    logout_user,
+    login_required,
+    current_user
+)
+
+# Protección contra solicitudes fraudulentas.
+from flask_wtf.csrf import CSRFProtect
+
+# Importamos nuestros formularios.
+from forms import LoginForm, AccionForm
 
 # Herram. SQLAlchemy.
 from sqlalchemy import text, inspect
@@ -38,13 +61,59 @@ app = Flask(__name__)
 app.config.from_object(Config)
 db.init_app(app)
 
+# -----------------------------------------
+#Configuración de seguridad.
+
+# Activamos CSRF para toda la aplicación.
+csrf = CSRFProtect(app)
+
+# Creamos el administrador de sesiones.
+login_manager = LoginManager(app)
+
+# Indicamos a qué ruta deberá dirigirse un usuario
+# cuando intente acceder sin estar autenticado.
+login_manager.login_view = "login"
+
+# Mensaje que aparecerá al intentar ingresar
+# a una sección protegida.
+login_manager.login_message = (
+    "Debés iniciar sesión para acceder a esta sección."
+)
+
+login_manager.login_message_category = "warning"
+
+# Protección adicional de las sesiones.
+login_manager.session_protection = "strong"
+
+
+# -----------------------------------------
+#Recuperación de usuario desde la sesión.
+
+@login_manager.user_loader
+def cargar_usuario(usuario_id):
+
+    # Flask-Login utiliza el ID almacenado en la sesión
+    # para recuperar el usuario desde MySQL.
+
+    try:
+
+        return db.session.get(
+            Usuario,
+            int(usuario_id)
+        )
+
+    except (ValueError, TypeError):
+
+        return None
+
+
 #-----------------------------------------
 #Ruta principal Portfolio.
 
 @app.route("/")
 def index():
 
-    # Buscamos perfil.
+    # Recuperamos perfil MySQL.
     perfil = Perfil.query.order_by(
         Perfil.id
     ).first()
@@ -54,22 +123,16 @@ def index():
 
         return "Portfolio sin inicializar.", 503
 
-    # Devolvemos información.
-    # Flask convierte el diccionario a JSON.
-    return {
+    # Jinja2.
+    return render_template(
 
-        "proyecto": "P. Portfolio.",
+        "index.html",
 
-        "nombre": perfil.nombre,
+        perfil=perfil,
 
-        "titulo": perfil.titulo,
+        accion=AccionForm()
 
-        "descripcion": perfil.descripcion
-
-    }
-
-
-
+    )
 
 
 
@@ -218,7 +281,7 @@ def probar_poo():
 
     print("\nPrueba finalizada.")
 
-# ==========================================
+# -----------------------------------------
 #Admin creation.
 
 @app.cli.command("crear-admin")
@@ -347,6 +410,105 @@ def ver_admin():
 
     else:
         print("El usuario no tiene un perfil asociado.")
+
+
+# ------------------------------------
+#Inicio de sesión.
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+
+    # Si el usuario ya inició sesión,
+    # lo redirigimos al portfolio.
+    if current_user.is_authenticated:
+
+        return redirect(url_for("index"))
+
+    # Creamos una instancia del formulario.
+    form = LoginForm()
+
+    # Comprobamos que el formulario haya sido enviado
+    # correctamente y que su token CSRF sea válido.
+    if form.validate_on_submit():
+
+        # Buscamos el usuario en MySQL.
+        usuario = Usuario.query.filter_by(
+
+            username=form.username.data.strip()
+
+        ).first()
+
+        # Comprobamos que el usuario exista
+        # y que la contraseña coincida con su hash.
+        if usuario and usuario.verificar_password(
+            form.password.data
+        ):
+
+            # Iniciamos la sesión del administrador.
+            login_user(usuario)
+
+            # Mostramos un mensaje de confirmación.
+            flash(
+                "Sesión iniciada. Modo edición activado.",
+                "success"
+            )
+
+            # Regresamos a la página principal.
+            return redirect(url_for("index"))
+
+        # Utilizamos un mensaje genérico para no revelar
+        # si un determinado usuario existe o no.
+        flash(
+            "Usuario o contraseña incorrectos.",
+            "danger"
+        )
+
+    # Mostramos la plantilla de inicio de sesión.
+    return render_template(
+        "login.html",
+        form=form
+    )
+
+# -----------------------------------------
+#Cierre de sesión.
+
+@app.route("/logout", methods=["POST"])
+@login_required
+def logout():
+
+    # Comprobamos el formulario y su token CSRF.
+    form = AccionForm()
+
+    if not form.validate_on_submit():
+
+        abort(400)
+
+    # Finalizamos la sesión del administrador.
+    logout_user()
+
+    # Informamos al usuario.
+    flash(
+        "Sesión cerrada correctamente.",
+        "success"
+    )
+
+    # Volvemos al portfolio público.
+    return redirect(url_for("index"))
+
+# -------------------------------------------
+#Panel de prueba.
+
+@app.route("/panel")
+@login_required
+def panel():
+
+    # Solo registrados pueden acceder a esta ruta.
+
+    return {
+        "estado": "Acceso autorizado",
+        "usuario": current_user.username,
+        "modo": "Administrador"
+    }
 
 #Ejecución servidor.
 

@@ -1,0 +1,569 @@
+/* Colours. */
+
+:root {
+
+    --negro: #111111;
+    --grafito: #303030;
+    --gris: #777777;
+    --gris-claro: #d9d9d9;
+    --blanco: #fafafa;
+
+    /* Colores secundarios de inspiración floral. */
+    --floral: #f7f4ef;
+    --rosa: #e6ced3;
+    --verde: #283e35;
+
+    /* Sombras características del diseño. */
+    --sombra: 8px 10px 0 rgba(0, 0, 0, 0.12);
+
+}
+
+
+/* Config. genral. */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+
+    margin: 0;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #ededeb;
+
+    color: var(--negro);
+
+    font-family: "DM Sans", sans-serif;
+
+}
+
+h1, h2 {
+
+    font-family: "Playfair Display", Georgia, serif;
+
+}
+
+a {
+
+    color: inherit;
+    text-decoration: none;
+
+}
+
+a:focus-visible,
+button:focus-visible {
+
+    outline: 3px solid var(--verde);
+    outline-offset: 4px;
+
+}
+
+
+/* NavBar. */
+
+.navbar-portfolio {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 15px;
+
+    padding: 18px 6%;
+
+    background: var(--blanco);
+
+    border-bottom: 1px solid var(--gris-claro);
+
+}
+
+.marca {
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+}
+
+.logo-texto {
+
+    display: grid;
+    place-items: center;
+
+    width: 42px;
+    height: 42px;
+
+    background: var(--negro);
+    color: white;
+
+    font-family: Georgia, serif;
+    font-size: 29px;
+
+    border-radius: 5px;
+
+}
+
+.nav-acciones {
+
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+}
+
+.modo-edicion {
+
+    color: var(--verde);
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+}
+
+
+/* Principal container.*/
+
+.contenedor {
+
+    flex: 1;
+
+    width: 92%;
+
+    max-width: 1200px;
+
+    margin: 35px auto;
+
+}
+
+
+/* Buttons */
+
+.btn-dark-custom {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 12px 20px;
+
+    background: var(--negro);
+
+    color: white;
+
+    border: 1px solid var(--negro);
+
+    border-radius: 4px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    /* Dv.*/
+
+    transition:
+        background 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+
+}
+
+.btn-dark-custom:hover {
+
+    background: var(--verde);
+
+    color: white;
+
+    transform: translateY(-3px);
+
+    box-shadow: 4px 5px 0 var(--gris-claro);
+
+}
+
+
+/* INIC. sesión. */
+
+.login-card {
+
+    max-width: 440px;
+
+    margin: 55px auto;
+
+    padding: 40px;
+
+    background: white;
+
+    border: 1px solid var(--gris-claro);
+
+    /* Sombra marcada, estilo monocromático. */
+    box-shadow: 12px 12px 0 var(--grafito);
+
+    /* DINAMISMO VISUAL:
+       Animación de entrada de la tarjeta. */
+
+    animation: aparecer 0.6s ease-out both;
+
+}
+
+.login-superior {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 25px;
+
+}
+
+.icono-login {
+
+    font-size: 30px;
+
+}
+
+.detalle-floral {
+
+    width: 40px;
+
+    height: 5px;
+
+    background: var(--rosa);
+
+}
+
+.etiqueta {
+
+    display: block;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: 3px;
+
+    color: var(--gris);
+
+    margin-bottom: 12px;
+
+}
+
+.login-card h1 {
+
+    font-size: 46px;
+
+    margin-bottom: 12px;
+
+}
+
+.texto-secundario {
+
+    color: #666666;
+
+    margin-bottom: 30px;
+
+    line-height: 1.6;
+
+}
+
+
+/* Formulario */
+
+label {
+
+    display: block;
+
+    font-weight: 600;
+
+    font-size: 14px;
+
+    margin-bottom: 8px;
+
+}
+
+.form-control {
+
+    padding: 12px;
+
+    border: 1px solid #bcbcbc;
+
+    border-radius: 3px;
+
+    font-size: 14px;
+
+}
+
+.form-control:focus {
+
+    border-color: var(--verde);
+
+    box-shadow: 0 0 0 3px #283e3520;
+
+}
+
+.campo-password {
+
+    position: relative;
+
+}
+
+.campo-password input {
+
+    padding-right: 45px;
+
+}
+
+.campo-password button {
+
+    position: absolute;
+
+    right: 8px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    padding: 7px;
+
+    border: none;
+
+    background: transparent;
+
+    color: var(--gris);
+
+    cursor: pointer;
+
+}
+
+.volver {
+
+    display: block;
+
+    text-align: center;
+
+    font-size: 13px;
+
+    color: #555555;
+
+    margin-top: 25px;
+
+    transition: color 0.25s;
+
+}
+
+.volver:hover {
+
+    color: var(--negro);
+
+    text-decoration: underline;
+
+}
+
+
+/* Port. provisional*/
+
+.presentacion-provisional {
+
+    padding: 50px;
+
+    margin-bottom: 30px;
+
+    background: var(--negro);
+
+    color: var(--blanco);
+
+    box-shadow: var(--sombra);
+
+}
+
+.presentacion-provisional .etiqueta {
+
+    color: var(--gris-claro);
+
+}
+
+.presentacion-provisional h1 {
+
+    font-size: clamp(32px, 6vw, 65px);
+
+    overflow-wrap: anywhere;
+
+}
+
+.presentacion-provisional h2 {
+
+    font-family: "DM Sans", sans-serif;
+
+    font-size: 20px;
+
+    color: var(--gris-claro);
+
+}
+
+.presentacion-provisional .btn-dark-custom {
+
+    background: white;
+
+    color: var(--negro);
+
+    margin-top: 15px;
+
+}
+
+.seccion-provisional {
+
+    padding: 30px;
+
+    margin-bottom: 25px;
+
+    background: white;
+
+    border: 1px solid var(--gris-claro);
+
+    box-shadow: var(--sombra);
+
+}
+
+.estado-admin {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 14px;
+
+    margin-top: 20px;
+
+    background: var(--verde);
+
+    border-left: 4px solid var(--rosa);
+
+    color: white;
+
+}
+
+
+/*Footer*/
+
+footer {
+
+    background: var(--negro);
+
+    color: var(--blanco);
+
+    padding: 30px 20px;
+
+    text-align: center;
+
+}
+
+footer small {
+
+    color: var(--gris-claro);
+
+}
+
+/* Animación aplicada al formulario de login. */
+
+@keyframes aparecer {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateY(15px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+    }
+
+}
+
+
+@media (max-width: 991px) {
+
+    .presentacion-provisional {
+        padding: 35px;
+    }
+
+    .contenedor {
+        width: 94%;
+    }
+}
+
+
+/* Responsive. */
+
+@media (max-width: 575px) {
+
+    .navbar-portfolio {
+        padding: 15px;
+    }
+
+    .nav-acciones {
+        gap: 8px;
+    }
+
+    .modo-edicion {
+        font-size: 11px;
+    }
+
+    .login-card {
+        padding: 25px;
+        margin: 25px 8px;
+        box-shadow: 7px 7px 0 var(--grafito);
+    }
+
+    .login-card h1 {
+        font-size: 36px;
+    }
+
+    .presentacion-provisional {
+        padding: 25px;
+    }
+
+    .seccion-provisional {
+        padding: 20px;
+    }
+
+}
+
+/* Configuración de usuarios
+   que prefieren reducir las animaciones. */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *, *::before, *::after {
+
+        animation: none !important;
+
+        transition: none !important;
+
+    }
+
+}

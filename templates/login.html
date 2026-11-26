@@ -1,0 +1,136 @@
+<!-- Heredamos la estructura principal. -->
+{% extends "base.html" %}
+
+
+<!-- Definimos el título de esta página. -->
+{% block title %}
+
+    Iniciar sesión | Portfolio
+
+{% endblock %}
+
+
+{% block content %}
+
+<!--TARJETA DE INICIO DE SESIÓN-->
+
+<section class="login-card">
+
+    <div class="login-superior">
+
+        <i class="fa-solid fa-lock icono-login"></i>
+
+        <span class="detalle-floral"></span>
+
+    </div>
+
+    <span class="etiqueta">
+
+        ACCESO PRIVADO
+
+    </span>
+
+    <h1>Bienvenido.</h1>
+
+    <p class="texto-secundario">
+
+        Ingresá para administrar tu portfolio.
+
+    </p>
+
+
+    <!-- Formulario conectado con Flask-WTF. -->
+    <form method="POST"
+          action="{{ url_for('login') }}">
+
+        <!-- Generamos automáticamente el token CSRF. -->
+        {{ form.hidden_tag() }}
+
+
+        <!-- CAMPO DE USUARIO -->
+        <div class="mb-3">
+
+            {{ form.username.label }}
+
+            {{ form.username(
+                class="form-control",
+                placeholder="Nombre de usuario",
+                autocomplete="username"
+            ) }}
+
+            <!-- Mostrar errores de validación. -->
+            {% for error in form.username.errors %}
+
+                <small class="text-danger">
+
+                    {{ error }}
+
+                </small>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- CAMPO DE CONTRASEÑA -->
+        <div class="mb-4">
+
+            {{ form.password.label }}
+
+            <div class="campo-password">
+
+                {{ form.password(
+                    class="form-control",
+                    placeholder="Ingresá tu contraseña",
+                    autocomplete="current-password"
+                ) }}
+
+                <!-- Botón para mostrar u ocultar contraseña. -->
+                <button type="button"
+                        id="togglePassword"
+                        aria-label="Mostrar contraseña"
+                        aria-pressed="false">
+
+                    <i class="fa-solid fa-eye"></i>
+
+                </button>
+
+            </div>
+
+            {% for error in form.password.errors %}
+
+                <small class="text-danger">
+
+                    {{ error }}
+
+                </small>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- BOTÓN DE INICIO DE SESIÓN -->
+        {{ form.submit(class="btn-dark-custom w-100") }}
+
+    </form>
+
+
+    <!-- REGRESAR A LA PÁGINA PRINCIPAL -->
+    <a href="{{ url_for('index') }}"
+       class="volver">
+
+        <i class="fa-solid fa-arrow-left"></i>
+
+        Volver al portfolio
+
+    </a>
+
+</section>
+
+
+<!-- Funciones específicas del inicio de sesión. -->
+<script src="{{ url_for('static', filename='js/login.js') }}">
+</script>
+
+{% endblock %}

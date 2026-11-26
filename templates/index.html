@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+
+    {{ perfil.nombre }} | Portfolio
+
+{% endblock %}
+
+
+{% block content %}
+
+<section class="presentacion-provisional">
+
+    <span class="etiqueta">
+
+        PORTFOLIO / PERSONAL
+
+    </span>
+
+    <h1>{{ perfil.nombre }}</h1>
+
+    <h2>{{ perfil.titulo }}</h2>
+
+    <!-- Estos datos provienen de MySQL. -->
+    <p>{{ perfil.descripcion }}</p>
+
+
+    <!-- Contenido exclusivo del administrador. -->
+    {% if current_user.is_authenticated %}
+
+        <div class="estado-admin">
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+            Sesión de administrador activa.
+
+        </div>
+
+        <!-- Ruta protegida que utilizaremos para pruebas. -->
+        <a href="{{ url_for('panel') }}"
+           class="btn-dark-custom">
+
+            <i class="fa-solid fa-lock"></i>
+
+            Comprobar acceso privado
+
+        </a>
+
+    {% endif %}
+
+</section>
+
+
+<section class="seccion-provisional">
+
+    <h2>01 / Acerca de mí</h2>
+
+    <p>Próximamente construiremos esta sección.</p>
+
+</section>
+
+
+<section class="seccion-provisional">
+
+    <h2>02 / Experiencia laboral</h2>
+
+    <p>Próximamente incorporaremos las experiencias.</p>
+
+</section>
+
+
+<section class="seccion-provisional">
+
+    <h2>03 / Educación</h2>
+
+    <p>Próximamente incorporaremos la formación académica.</p>
+
+</section>
+
+{% endblock %}
