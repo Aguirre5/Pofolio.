@@ -10,72 +10,557 @@
 
 {% block content %}
 
-<section class="presentacion-provisional">
 
-    <span class="etiqueta">
+<!--Principio.-->
 
-        PORTFOLIO / PERSONAL
+<section class="hero">
 
-    </span>
+    <div class="banner">
 
-    <h1>{{ perfil.nombre }}</h1>
+        <!-- Si existe un banner en MySQL, lo mostramos. -->
 
-    <h2>{{ perfil.titulo }}</h2>
+        {% if perfil.banner %}
 
-    <!-- Estos datos provienen de MySQL. -->
-    <p>{{ perfil.descripcion }}</p>
+            <img class="banner-img"
+                 src="{{ perfil.banner }}"
+                 alt="Banner personal">
+
+        {% endif %}
 
 
-    <!-- Contenido exclusivo del administrador. -->
-    {% if current_user.is_authenticated %}
+        <!-- Elemento decorativo de inspiración floral. -->
 
-        <div class="estado-admin">
+        <div class="banner-decoracion"></div>
 
-            <i class="fa-solid fa-shield-halved"></i>
 
-            Sesión de administrador activa.
+        <!-- Contenido principal del banner. -->
+
+        <div class="banner-texto">
+
+            <span class="linea-floral"></span>
+
+            <span class="banner-etiqueta">
+
+                PORTFOLIO / PERSONAL
+
+            </span>
+
+            <h1>
+
+                Diseño.<br>
+                Tecnología.
+
+            </h1>
+
+            <p>
+
+                APRENDER · CREAR · DESARROLLAR
+
+            </p>
 
         </div>
 
-        <!-- Ruta protegida que utilizaremos para pruebas. -->
-        <a href="{{ url_for('panel') }}"
-           class="btn-dark-custom">
+    </div>
 
-            <i class="fa-solid fa-lock"></i>
 
-            Comprobar acceso privado
+    <!--Me.-->
+
+    <div class="presentacion">
+
+        <!-- Fotografía recuperada desde MySQL. -->
+
+        {% if perfil.foto %}
+
+            <img class="foto-perfil"
+                 src="{{ perfil.foto }}"
+                 alt="Foto de {{ perfil.nombre }}">
+
+        {% else %}
+
+            <!-- Imagen provisoria si no existe fotografía. -->
+
+            <div class="foto-perfil foto-vacia">
+
+                <i class="fa-solid fa-user"></i>
+
+            </div>
+
+        {% endif %}
+
+
+        <div class="informacion-personal">
+
+            <span class="etiqueta">
+
+                SOBRE EL AUTOR
+
+            </span>
+
+            <h2>{{ perfil.nombre }}</h2>
+
+            <p class="subtitulo">
+
+                {{ perfil.titulo or "Portfolio profesional" }}
+
+            </p>
+
+
+            <!-- Ubicación del propietario. -->
+
+            {% if perfil.ubicacion %}
+
+                <p class="ubicacion">
+
+                    <i class="fa-solid fa-location-dot"></i>
+
+                    {{ perfil.ubicacion }}
+
+                </p>
+
+            {% endif %}
+
+
+            <!-- Redes sociales personales. -->
+
+            <div class="redes">
+
+                {% if perfil.github %}
+
+                    <a href="{{ perfil.github }}"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       aria-label="GitHub">
+
+                        <i class="fa-brands fa-github"></i>
+
+                    </a>
+
+                {% endif %}
+
+
+                {% if perfil.linkedin %}
+
+                    <a href="{{ perfil.linkedin }}"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       aria-label="LinkedIn">
+
+                        <i class="fa-brands fa-linkedin"></i>
+
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!--Navs.-->
+
+<nav class="nav-secciones"
+     aria-label="Secciones del portfolio">
+
+    <a href="#acerca">Acerca de mí</a>
+
+    <a href="#experiencia">Experiencia</a>
+
+    <a href="#educacion">Educación</a>
+
+    <a href="#habilidades">Habilidades</a>
+
+    <a href="#proyectos">Proyectos</a>
+
+    <a href="#contacto">Contacto</a>
+
+</nav>
+
+
+<!--Admin.-->
+
+{% if current_user.is_authenticated %}
+
+    <div class="estado-admin mb-4">
+
+        <i class="fa-solid fa-shield-halved"></i>
+
+        Sesión de administrador activa.
+
+    </div>
+
+{% endif %}
+
+
+<!--Sobre mí.-->
+
+<section class="seccion" id="acerca">
+
+    <div class="encabezado-seccion">
+
+        <div>
+
+            <span class="etiqueta">PRESENTACIÓN</span>
+
+            <h2>01 / Acerca de mí</h2>
+
+        </div>
+
+        <i class="fa-regular fa-address-card icono-seccion"></i>
+
+    </div>
+
+
+    <!-- Descripción almacenada en la tabla perfil. -->
+
+    <p class="descripcion">
+
+        {{ perfil.descripcion or "Presentación pendiente." }}
+
+    </p>
+
+</section>
+
+
+<!--Macro Jinja2.-->
+
+<!-- Una macro permite reutilizar una estructura
+     HTML sin escribir el mismo código varias veces. -->
+
+{% macro mostrar_tarjetas(elementos, icono, mensaje) %}
+
+    <div class="tarjetas-grid">
+
+        {% for item, datos in elementos %}
+
+            <article class="tarjeta">
+
+                <!-- Mostrar imagen si está registrada. -->
+
+                {% if item.imagen %}
+
+                    <img class="imagen-tarjeta"
+                         src="{{ item.imagen }}"
+                         loading="lazy"
+                         alt="{{ datos.titulo }}">
+
+                {% else %}
+
+                    <div class="imagen-vacia">
+
+                        <i class="{{ icono }}"></i>
+
+                    </div>
+
+                {% endif %}
+
+
+                <div class="tarjeta-contenido">
+
+                    <!-- Título obtenido mediante polimorfismo. -->
+
+                    <h3>{{ datos.titulo }}</h3>
+
+
+                    {% if datos.detalle %}
+
+                        <p class="detalle">
+
+                            {{ datos.detalle }}
+
+                        </p>
+
+                    {% endif %}
+
+
+                    <!-- Algunas tarjetas tienen período. -->
+
+                    {% if item.periodo is defined and item.periodo %}
+
+                        <p class="periodo">
+
+                            <i class="fa-regular fa-calendar"></i>
+
+                            {{ item.periodo }}
+
+                        </p>
+
+                    {% endif %}
+
+
+                    {% if item.descripcion %}
+
+                        <p class="descripcion">
+
+                            {{ item.descripcion }}
+
+                        </p>
+
+                    {% endif %}
+
+
+                    <!-- Los proyectos pueden incluir enlaces. -->
+
+                    {% if item.enlace is defined and item.enlace %}
+
+                        <a href="{{ item.enlace }}"
+                           class="btn-dark-custom"
+                           target="_blank"
+                           rel="noopener noreferrer">
+
+                            Ver proyecto
+
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+                        </a>
+
+                    {% endif %}
+
+                </div>
+
+            </article>
+
+        {% else %}
+
+            <!-- Mensaje si todavía no existen registros. -->
+
+            <div class="contenido-vacio">
+
+                <i class="{{ icono }}"></i>
+
+                <p>{{ mensaje }}</p>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+{% endmacro %}
+
+
+<!--Experiencia-->
+
+<section class="seccion" id="experiencia">
+
+    <div class="encabezado-seccion">
+
+        <div>
+
+            <span class="etiqueta">TRAYECTORIA</span>
+
+            <h2>02 / Experiencia laboral</h2>
+
+        </div>
+
+        <i class="fa-solid fa-briefcase icono-seccion"></i>
+
+    </div>
+
+
+    <!-- Reutilizamos nuestra macro de tarjetas. -->
+
+    {{ mostrar_tarjetas(
+        tarjetas["experiencias"],
+        "fa-solid fa-briefcase",
+        "Todavía no hay experiencias laborales publicadas."
+    ) }}
+
+</section>
+
+
+<!-- Educación. -->
+
+<section class="seccion" id="educacion">
+
+    <div class="encabezado-seccion">
+
+        <div>
+
+            <span class="etiqueta">FORMACIÓN</span>
+
+            <h2>03 / Educación</h2>
+
+        </div>
+
+        <i class="fa-solid fa-graduation-cap icono-seccion"></i>
+
+    </div>
+
+
+    {{ mostrar_tarjetas(
+        tarjetas["educacion"],
+        "fa-solid fa-graduation-cap",
+        "Todavía no hay estudios publicados."
+    ) }}
+
+</section>
+
+
+<!-- SKILLS & Idiomas. -->
+
+<section class="seccion" id="habilidades">
+
+    <div class="encabezado-seccion">
+
+        <div>
+
+            <span class="etiqueta">CONOCIMIENTOS</span>
+
+            <h2>04 / Habilidades</h2>
+
+        </div>
+
+        <i class="fa-solid fa-chart-simple icono-seccion"></i>
+
+    </div>
+
+
+    <!-- Recorremos los tres tipos de habilidades. -->
+
+    {% for tipo, titulo in [
+
+        ("hard", "Hard Skills"),
+
+        ("soft", "Soft Skills"),
+
+        ("idioma", "Idiomas")
+
+    ] %}
+
+        <h3 class="titulo-habilidades">
+
+            {{ titulo }}
+
+        </h3>
+
+
+        <div class="habilidades-grid">
+
+            <!-- Filtramos las habilidades según su tipo. -->
+
+            {% for habilidad in habilidades if habilidad.tipo == tipo %}
+
+                <article class="habilidad">
+
+                    <!-- El porcentaje de MySQL controla
+                         el gráfico circular mediante CSS. -->
+
+                    <div class="circulo"
+                         style="--nivel: {{ habilidad.porcentaje }}%">
+
+                        <span>
+
+                            {{ habilidad.porcentaje }}%
+
+                        </span>
+
+                    </div>
+
+                    <h4>{{ habilidad.nombre }}</h4>
+
+                </article>
+
+            {% else %}
+
+                <div class="contenido-vacio">
+
+                    <i class="fa-solid fa-chart-pie"></i>
+
+                    <p>Sin habilidades publicadas.</p>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endfor %}
+
+</section>
+
+
+<!--Proyectos-->
+
+<section class="seccion seccion-proyectos"
+         id="proyectos">
+
+    <div class="encabezado-seccion">
+
+        <div>
+
+            <span class="etiqueta">DESARROLLO</span>
+
+            <h2>05 / Proyectos</h2>
+
+        </div>
+
+        <i class="fa-solid fa-code icono-seccion"></i>
+
+    </div>
+
+
+    {{ mostrar_tarjetas(
+        tarjetas["proyectos"],
+        "fa-solid fa-laptop-code",
+        "Todavía no hay proyectos publicados."
+    ) }}
+
+</section>
+
+
+<!--Contacto-->
+
+<section class="seccion" id="contacto">
+
+    <div class="encabezado-seccion">
+
+        <div>
+
+            <span class="etiqueta">CONECTEMOS</span>
+
+            <h2>06 / Contacto</h2>
+
+        </div>
+
+        <i class="fa-regular fa-envelope icono-seccion"></i>
+
+    </div>
+
+
+    <p class="descripcion">
+
+        Si te interesa conocer más sobre mi trabajo,
+        podés contactarme a través de mis redes.
+
+    </p>
+
+
+    {% if perfil.email %}
+
+        <a class="contacto-email"
+           href="mailto:{{ perfil.email }}">
+
+            <i class="fa-solid fa-envelope"></i>
+
+            {{ perfil.email }}
 
         </a>
+
+    {% else %}
+
+        <p class="texto-secundario">
+
+            Información de contacto pendiente.
+
+        </p>
 
     {% endif %}
 
 </section>
 
-
-<section class="seccion-provisional">
-
-    <h2>01 / Acerca de mí</h2>
-
-    <p>Próximamente construiremos esta sección.</p>
-
-</section>
-
-
-<section class="seccion-provisional">
-
-    <h2>02 / Experiencia laboral</h2>
-
-    <p>Próximamente incorporaremos las experiencias.</p>
-
-</section>
-
-
-<section class="seccion-provisional">
-
-    <h2>03 / Educación</h2>
-
-    <p>Próximamente incorporaremos la formación académica.</p>
-
-</section>
 
 {% endblock %}

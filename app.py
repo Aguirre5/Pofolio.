@@ -113,27 +113,118 @@ def cargar_usuario(usuario_id):
 @app.route("/")
 def index():
 
-    # Recuperamos perfil MySQL.
+    # Recuperamos el perfil personal.
     perfil = Perfil.query.order_by(
         Perfil.id
     ).first()
 
-    # ¿Existe?
+    # Comprobamos que el portfolio esté inicializado.
     if perfil is None:
 
         return "Portfolio sin inicializar.", 503
 
-    # Jinja2.
+    # Identificador del propietario del portfolio.
+    uid = perfil.usuario_id
+
+
+    # ---------------------------------------
+    # Consultas SQL.
+
+    # Recuperamos todas las experiencias laborales.
+    experiencias = Experiencia.query.filter_by(
+        usuario_id=uid
+    ).order_by(
+        Experiencia.id.desc()
+    ).all()
+
+    # Recuperamos la formación académica.
+    educacion = Educacion.query.filter_by(
+        usuario_id=uid
+    ).order_by(
+        Educacion.id.desc()
+    ).all()
+
+    # Recuperamos las habilidades.
+    habilidades = Habilidad.query.filter_by(
+        usuario_id=uid
+    ).order_by(
+        Habilidad.id
+    ).all()
+
+    # Recuperamos los proyectos realizados.
+    proyectos = Proyecto.query.filter_by(
+        usuario_id=uid
+    ).order_by(
+        Proyecto.id.desc()
+    ).all()
+
+
+    # -------------------------------------------
+    #Polimorfismo.
+    # Utilizamos una misma función para presentar
+    # diferentes tipos de contenido.
+
+    tarjetas = {
+
+        "experiencias": [
+
+            (
+                item,
+                presentar_contenido(
+                    TarjetaExperiencia(item)
+                )
+            )
+
+            for item in experiencias
+
+        ],
+
+        "educacion": [
+
+            (
+                item,
+                presentar_contenido(
+                    TarjetaEducacion(item)
+                )
+            )
+
+            for item in educacion
+
+        ],
+
+        "proyectos": [
+
+            (
+                item,
+                presentar_contenido(
+                    TarjetaProyecto(item)
+                )
+            )
+
+            for item in proyectos
+
+        ]
+
+    }
+
+
+    # ---------------------------------
+    #Envío info. a Jinja2.
+
+
     return render_template(
 
         "index.html",
 
         perfil=perfil,
 
+        tarjetas=tarjetas,
+
+        habilidades=habilidades,
+
         accion=AccionForm()
 
     )
-
 
 
 #Conexión MYSQL prueba.

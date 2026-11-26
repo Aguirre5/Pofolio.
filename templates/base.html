@@ -57,6 +57,45 @@
 
         <div class="nav-acciones">
 
+            <!--REDES SOCIALES DEL PROPIETARIO-->
+
+{% if perfil is defined %}
+
+    <div class="redes-navbar">
+
+        {% if perfil.github %}
+
+            <a href="{{ perfil.github }}"
+               target="_blank"
+               rel="noopener noreferrer"
+               aria-label="GitHub"
+               title="GitHub">
+
+                <i class="fa-brands fa-github"></i>
+
+            </a>
+
+        {% endif %}
+
+
+        {% if perfil.linkedin %}
+
+            <a href="{{ perfil.linkedin }}"
+               target="_blank"
+               rel="noopener noreferrer"
+               aria-label="LinkedIn"
+               title="LinkedIn">
+
+                <i class="fa-brands fa-linkedin"></i>
+
+            </a>
+
+        {% endif %}
+
+    </div>
+
+{% endif %}
+
             <!-- Jinja2 comprueba si existe una sesión. -->
             {% if current_user.is_authenticated %}
 

@@ -567,3 +567,925 @@ footer small {
     }
 
 }
+
+
+/* ==========================================
+   14. REDES SOCIALES DE LA BARRA SUPERIOR
+   ========================================== */
+
+.redes-navbar {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+
+    font-size: 21px;
+
+}
+
+.redes-navbar a {
+
+    transition: color 0.25s,
+                transform 0.25s;
+
+}
+
+.redes-navbar a:hover {
+
+    color: var(--verde);
+
+    transform: translateY(-3px);
+
+}
+
+
+/* ==========================================
+   15. BANNER PRINCIPAL
+   ========================================== */
+
+.hero {
+
+    margin-bottom: 30px;
+
+    background: var(--blanco);
+
+    box-shadow: var(--sombra);
+
+    border: 1px solid var(--gris-claro);
+
+}
+
+.banner {
+
+    min-height: 360px;
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    overflow: hidden;
+
+    padding: 50px;
+
+
+    /* Combinación de líneas y degradados grises. */
+
+    background:
+
+        repeating-linear-gradient(
+
+            125deg,
+
+            transparent 0px,
+
+            transparent 35px,
+
+            rgba(255, 255, 255, 0.025) 36px
+
+        ),
+
+        linear-gradient(
+
+            120deg,
+
+            #111111,
+
+            #252525,
+
+            #515151
+
+        );
+
+    color: white;
+
+}
+
+
+/* Imagen personalizada del banner. */
+
+.banner-img {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    /* Conservamos la estética monocromática. */
+
+    filter: grayscale(100%) brightness(40%);
+
+}
+
+
+/* Decoración floral del fondo. */
+
+.banner-decoracion {
+
+    position: absolute;
+
+    top: 0;
+
+    right: 0;
+
+    width: 48%;
+
+    height: 100%;
+
+    background-image: url("../img/floral.svg");
+
+    background-repeat: no-repeat;
+
+    background-position: center right;
+
+    background-size: contain;
+
+    opacity: 0.35;
+
+    pointer-events: none;
+
+}
+
+.banner-texto {
+
+    position: relative;
+
+    z-index: 1;
+
+    animation: aparecer 0.8s ease-out both;
+
+}
+
+.linea-floral {
+
+    display: block;
+
+    width: 40px;
+
+    height: 3px;
+
+    background: var(--rosa);
+
+    margin-bottom: 18px;
+
+}
+
+.banner-etiqueta {
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    letter-spacing: 4px;
+
+    color: var(--gris-claro);
+
+}
+
+.banner h1 {
+
+    font-size: clamp(45px, 7vw, 90px);
+
+    line-height: 1.05;
+
+    margin: 18px 0;
+
+    letter-spacing: -2px;
+
+}
+
+.banner p {
+
+    font-size: 11px;
+
+    letter-spacing: 3px;
+
+    color: var(--gris-claro);
+
+}
+
+
+/* ==========================================
+   16. PERFIL PERSONAL
+   ========================================== */
+
+.presentacion {
+
+    position: relative;
+
+    padding: 0 40px 35px;
+
+}
+
+.foto-perfil {
+
+    position: relative;
+
+    display: block;
+
+    width: 145px;
+
+    height: 145px;
+
+    margin-top: -55px;
+
+    margin-bottom: 24px;
+
+    border: 6px solid var(--blanco);
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    filter: grayscale(100%);
+
+    box-shadow: 0 7px 20px #0003;
+
+    z-index: 2;
+
+}
+
+
+/* Imagen provisoria del perfil. */
+
+.foto-vacia {
+
+    display: grid;
+
+    place-items: center;
+
+    background: var(--gris-claro);
+
+    color: var(--gris);
+
+    font-size: 48px;
+
+}
+
+.informacion-personal h2 {
+
+    font-size: clamp(30px, 5vw, 48px);
+
+    overflow-wrap: anywhere;
+
+    margin-bottom: 8px;
+
+}
+
+.subtitulo {
+
+    font-size: 18px;
+
+    color: #555555;
+
+}
+
+.ubicacion {
+
+    color: var(--gris);
+
+    font-size: 14px;
+
+}
+
+.redes {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    font-size: 23px;
+
+}
+
+.redes a {
+
+    transition: transform 0.25s,
+                color 0.25s;
+
+}
+
+.redes a:hover {
+
+    transform: translateY(-4px);
+
+    color: var(--verde);
+
+}
+
+
+/* ==========================================
+   17. NAVEGACIÓN ENTRE SECCIONES
+   ========================================== */
+
+html {
+
+    scroll-behavior: smooth;
+
+}
+
+.nav-secciones {
+
+    display: flex;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 10px 25px;
+
+    background: var(--blanco);
+
+    border: 1px solid var(--gris-claro);
+
+    padding: 20px;
+
+    margin-bottom: 30px;
+
+}
+
+.nav-secciones a {
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    border-bottom: 2px solid transparent;
+
+    transition: border-color 0.25s;
+
+}
+
+.nav-secciones a:hover {
+
+    border-color: var(--rosa);
+
+}
+
+
+/* ==========================================
+   18. SECCIONES DEL PORTFOLIO
+   ========================================== */
+
+.seccion {
+
+    background: var(--blanco);
+
+    padding: 35px;
+
+    margin-bottom: 30px;
+
+    box-shadow: var(--sombra);
+
+    border: 1px solid var(--gris-claro);
+
+    scroll-margin-top: 25px;
+
+}
+
+.encabezado-seccion {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 25px;
+
+}
+
+.encabezado-seccion h2 {
+
+    font-size: clamp(24px, 4vw, 34px);
+
+    margin-bottom: 0;
+
+}
+
+.icono-seccion {
+
+    font-size: 25px;
+
+    color: var(--grafito);
+
+}
+
+.descripcion {
+
+    line-height: 1.8;
+
+    white-space: pre-line;
+
+    overflow-wrap: anywhere;
+
+}
+
+
+/* ==========================================
+   19. TARJETAS DE CONTENIDO
+   ========================================== */
+
+.tarjetas-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 24px;
+
+}
+
+.tarjeta {
+
+    background: white;
+
+    border: 1px solid var(--gris-claro);
+
+    box-shadow: 5px 5px 0 #d9d9d9;
+
+    overflow: hidden;
+
+    /* DINAMISMO VISUAL:
+       Transformación y transición de sombras. */
+
+    transition:
+
+        transform 0.3s ease,
+
+        box-shadow 0.3s ease;
+
+}
+
+.tarjeta:hover {
+
+    transform: translateY(-6px);
+
+    box-shadow: 8px 12px 0 #c8c8c8;
+
+}
+
+.imagen-tarjeta {
+
+    display: block;
+
+    width: 100%;
+
+    aspect-ratio: 16 / 9;
+
+    object-fit: cover;
+
+    filter: grayscale(100%);
+
+    transition: filter 0.4s ease;
+
+}
+
+.imagen-tarjeta:hover {
+
+    filter: grayscale(0%);
+
+}
+
+
+/* Imagen alternativa si no hay una fotografía. */
+
+.imagen-vacia {
+
+    display: grid;
+
+    place-items: center;
+
+    aspect-ratio: 16 / 9;
+
+    background: linear-gradient(
+
+        135deg,
+
+        #e4e4e4,
+
+        #bcbcbc
+
+    );
+
+    color: var(--grafito);
+
+    font-size: 42px;
+
+}
+
+.tarjeta-contenido {
+
+    padding: 22px;
+
+    color: var(--negro);
+
+}
+
+.tarjeta h3 {
+
+    font-size: 20px;
+
+    overflow-wrap: anywhere;
+
+}
+
+.detalle {
+
+    color: var(--verde);
+
+    font-weight: 600;
+
+}
+
+.periodo {
+
+    color: var(--gris);
+
+    font-size: 13px;
+
+}
+
+
+/* ==========================================
+   20. ESTADO SIN INFORMACIÓN
+   ========================================== */
+
+.contenido-vacio {
+
+    grid-column: 1 / -1;
+
+    padding: 26px;
+
+    text-align: center;
+
+    border: 1px dashed #bcbcbc;
+
+    color: #666666;
+
+    background: var(--floral);
+
+}
+
+.contenido-vacio i {
+
+    font-size: 24px;
+
+    margin-bottom: 12px;
+
+}
+
+.contenido-vacio p {
+
+    margin: 0;
+
+    font-size: 14px;
+
+}
+
+
+/* ==========================================
+   21. HARD SKILLS Y SOFT SKILLS
+   ========================================== */
+
+.titulo-habilidades {
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+    margin: 30px 0 18px;
+
+}
+
+.habilidades-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    gap: 20px;
+
+}
+
+.habilidad {
+
+    padding: 25px 15px;
+
+    background: white;
+
+    border: 1px solid var(--gris-claro);
+
+    text-align: center;
+
+    transition: transform 0.25s;
+
+}
+
+.habilidad:hover {
+
+    transform: translateY(-4px);
+
+}
+
+.habilidad h4 {
+
+    font-size: 15px;
+
+    margin-top: 18px;
+
+    overflow-wrap: anywhere;
+
+}
+
+
+/* ==========================================
+   22. GRÁFICOS CIRCULARES
+   ========================================== */
+
+.circulo {
+
+    position: relative;
+
+    display: grid;
+
+    place-items: center;
+
+    width: min(115px, 100%);
+
+    aspect-ratio: 1;
+
+    margin: auto;
+
+    border-radius: 50%;
+
+    /* --nivel recibe el porcentaje de MySQL. */
+
+    background: conic-gradient(
+
+        var(--grafito) var(--nivel),
+
+        var(--gris-claro) 0
+
+    );
+
+    animation: aparecer 0.7s ease-out both;
+
+}
+
+
+/* Círculo interno del indicador. */
+
+.circulo::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 10px;
+
+    background: white;
+
+    border-radius: 50%;
+
+}
+
+.circulo span {
+
+    position: relative;
+
+    z-index: 1;
+
+    font-size: 23px;
+
+    font-weight: 700;
+
+}
+
+
+/* ==========================================
+   23. SECCIÓN DE PROYECTOS
+   ========================================== */
+
+.seccion-proyectos {
+
+    background: var(--grafito);
+
+    color: white;
+
+    border-color: var(--negro);
+
+}
+
+.seccion-proyectos .etiqueta {
+
+    color: var(--gris-claro);
+
+}
+
+.seccion-proyectos .icono-seccion {
+
+    color: white;
+
+}
+
+.seccion-proyectos .tarjeta {
+
+    box-shadow: 6px 6px 0 #111111;
+
+}
+
+.seccion-proyectos .contenido-vacio {
+
+    background: #3d3d3d;
+
+    color: var(--gris-claro);
+
+    border-color: #777777;
+
+}
+
+
+/* ==========================================
+   24. CONTACTO
+   ========================================== */
+
+.contacto-email {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    font-weight: 600;
+
+    color: var(--verde);
+
+    overflow-wrap: anywhere;
+
+}
+
+
+/* ==========================================
+   25. RESPONSIVE: TABLET
+   ========================================== */
+
+@media (max-width: 991px) {
+
+    .tarjetas-grid {
+
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    }
+
+    .habilidades-grid {
+
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    }
+
+    .banner {
+
+        min-height: 310px;
+
+        padding: 35px;
+
+    }
+
+}
+
+
+/* ==========================================
+   26. RESPONSIVE: MOBILE
+   ========================================== */
+
+@media (max-width: 575px) {
+
+    .banner {
+
+        min-height: 280px;
+
+        padding: 25px;
+
+    }
+
+    .banner h1 {
+
+        font-size: clamp(34px, 10vw, 45px);
+
+        letter-spacing: -1px;
+
+    }
+
+    .banner p {
+
+        font-size: 9px;
+
+        letter-spacing: 1px;
+
+    }
+
+    .banner-etiqueta {
+
+        font-size: 9px;
+
+        letter-spacing: 2px;
+
+    }
+
+    .banner-decoracion {
+
+        width: 65%;
+
+        opacity: 0.18;
+
+    }
+
+    .presentacion {
+
+        padding: 0 22px 25px;
+
+    }
+
+    .foto-perfil {
+
+        width: 110px;
+
+        height: 110px;
+
+        margin-top: -38px;
+
+    }
+
+    .seccion {
+
+        padding: 20px;
+
+    }
+
+    .tarjetas-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .habilidades-grid {
+
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        gap: 10px;
+
+    }
+
+    .habilidad {
+
+        padding: 15px 10px;
+
+    }
+
+    .circulo span {
+
+        font-size: 19px;
+
+    }
+
+    .nav-secciones {
+
+        gap: 15px;
+
+    }
+
+    .nav-acciones {
+
+        flex-wrap: wrap;
+
+    }
+
+}
+
+
+/* Accesibilidad: respetamos la preferencia
+   del usuario por reducir el movimiento. */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+
+        scroll-behavior: auto;
+
+    }
+
+}

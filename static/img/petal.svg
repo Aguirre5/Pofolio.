@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 500 500">
+
+    <g fill="none"
+       stroke="#d9d9d9"
+       stroke-width="1.5"
+       stroke-linecap="round">
+
+        <!-- Tallo principal -->
+
+        <path d="M250 500
+                 Q160 350 250 200"/>
+
+        <!-- Hojas inferiores -->
+
+        <path d="M220 420
+                 Q80 300 100 390
+                 Q130 440 220 420"/>
+
+        <path d="M220 450
+                 Q390 310 380 390
+                 Q340 450 220 450"/>
+
+        <!-- Hojas superiores -->
+
+        <path d="M220 320
+                 Q110 220 120 290
+                 Q150 340 220 320"/>
+
+        <path d="M225 355
+                 Q360 220 360 300
+                 Q325 355 225 355"/>
+
+        <!-- Pétalos de la flor -->
+
+        <ellipse cx="250" cy="130"
+                 rx="30" ry="70"/>
+
+        <ellipse cx="250" cy="130"
+                 rx="30" ry="70"
+                 transform="rotate(60 250 200)"/>
+
+        <ellipse cx="250" cy="130"
+                 rx="30" ry="70"
+                 transform="rotate(120 250 200)"/>
+
+        <ellipse cx="250" cy="130"
+                 rx="30" ry="70"
+                 transform="rotate(180 250 200)"/>
+
+        <ellipse cx="250" cy="130"
+                 rx="30" ry="70"
+                 transform="rotate(240 250 200)"/>
+
+        <ellipse cx="250" cy="130"
+                 rx="30" ry="70"
+                 transform="rotate(300 250 200)"/>
+
+        <!-- Centro de la flor -->
+
+        <circle cx="250" cy="200" r="17"
+                stroke="#e6ced3"/>
+
+    </g>
+
+</svg>
