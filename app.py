@@ -1,5 +1,7 @@
 import click
 
+from flask import send_from_directory
+
 # Flask.
 from flask import (
     Flask,
@@ -118,16 +120,13 @@ def cargar_usuario(usuario_id):
 
         return None
 
-
-# ==========================================
-# CONFIGURACIÓN DE LAS SECCIONES CRUD
-# ==========================================
+# Configuración CRUD-
 
 # Cada sección tiene asociado:
-# 1. Su modelo de MySQL.
-# 2. Su formulario Flask-WTF.
-# 3. Su nombre descriptivo.
-# 4. Su identificador dentro del HTML.
+# 1. Modelo de MySQL.
+# 2. Formulario Flask-WTF.
+# 3. Nombre descriptivo.
+# 4. Identificador dentro del HTML.
 
 SECCIONES = {
 
@@ -281,10 +280,15 @@ def index():
         "banner.webp"
     ).is_file()
 
+    # Jinja2 recibe.
 
-    # ======================================
-    # ENVÍO DE INFORMACIÓN A JINJA2
-    # ======================================
+    # Comprobamos si el CV se encuentra disponible.
+    cv_disponible = Path(
+        app.static_folder,
+        "docs",
+        "cv.pdf"
+    ).is_file()
+
 
     return render_template(
 
@@ -300,7 +304,9 @@ def index():
 
         foto_local=foto_local,
 
-        banner_local=banner_local
+        banner_local=banner_local,
+
+        cv_disponible=cv_disponible
 
     )
 
@@ -326,8 +332,8 @@ def probar_base_datos():
     finally:
         # Liberamos sesión de bd.
         db.session.remove()
-        
-        
+
+
 #Tablas.
 
 @app.cli.command("init-db")
@@ -966,9 +972,7 @@ def eliminar(seccion, id):
         url_for("index", _anchor=ancla)
     )
 
-# ==========================================
-# CONFIRMACIÓN DE EDICIÓN MEDIANTE MODAL
-# ==========================================
+# Confirmación de edición.
 
 @app.route("/edicion/completa")
 @login_required
@@ -998,6 +1002,22 @@ def edicion_completa():
             "index",
             _anchor=seccion
         )
+
+    )
+
+# Descarga CV.
+
+@app.route("/cv")
+def descargar_cv():
+
+    # Enviamos el PDF como archivo descargable.
+    return send_from_directory(
+
+        Path(app.static_folder) / "docs",
+
+        "cv.pdf",
+
+        as_attachment=True
 
     )
 

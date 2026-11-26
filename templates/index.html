@@ -10,9 +10,7 @@
 
 {% block content %}
 
-<!-- =====================================
-     MACRO PARA AGREGAR REGISTROS
-     ===================================== -->
+<!-- MACRO PARA AGREGAR REGISTROS -->
 
 {% macro boton_agregar(seccion) %}
 
@@ -33,9 +31,7 @@
 {% endmacro %}
 
 
-<!-- =====================================
-     MACRO PARA EDITAR Y ELIMINAR REGISTROS
-     ===================================== -->
+<!-- Macroedicion y eliminación de regs. -->
 
 {% macro controles(seccion, id) %}
 
@@ -87,7 +83,7 @@
 {% endmacro %}
 
 
-<!--Principio.-->
+<!-- Principio. -->
 
 <section class="hero">
 
@@ -116,8 +112,6 @@
             <img class="banner-img"
                  src="{{ perfil.banner }}"
                  alt="">
-
-        <!-- Segunda opción: imagen local. -->
 
         {% elif banner_local %}
 
@@ -263,9 +257,6 @@
 
                     </a>
 
-                {% endif %}
-
-
                 {% if perfil.linkedin %}
 
                     <a href="{{ perfil.linkedin }}"
@@ -281,6 +272,46 @@
 
             </div>
 
+            <!-- DESCARGA DEL CURRICULUM VITAE -->
+
+            <div class="acciones-cv">
+
+                {% if cv_disponible %}
+
+                    <a href="{{ url_for('descargar_cv') }}"
+                       class="btn-dark-custom">
+
+                        <i class="fa-solid fa-download"></i>
+
+                        Descargar CV
+
+                    </a>
+
+                {% else %}
+
+                    <!-- Botón provisional hasta incorporar el PDF. -->
+
+                    <button type="button"
+                            class="btn-dark-custom btn-cv-pendiente"
+                            disabled
+                            title="Curriculum próximamente disponible">
+
+                        <i class="fa-regular fa-file-pdf"></i>
+
+                        Descargar CV
+
+                    </button>
+
+                    <small class="cv-aviso">
+
+                        Próximamente disponible.
+
+                    </small>
+
+                {% endif %}
+
+            </div>
+
         </div>
 
     </div>
@@ -288,7 +319,7 @@
 </section>
 
 
-<!--Navs.-->
+<!-- Navs. -->
 
 <nav class="nav-secciones"
      aria-label="Secciones del portfolio">
@@ -308,7 +339,7 @@
 </nav>
 
 
-<!--Admin.-->
+<!-- Admin. -->
 
 {% if current_user.is_authenticated %}
 
@@ -323,7 +354,7 @@
 {% endif %}
 
 
-<!--Sobre mí.-->
+<!-- Sobre mí. -->
 
 <section class="seccion" id="acerca">
 
@@ -369,10 +400,9 @@
 </section>
 
 
-<!--Macro Jinja2.-->
+<!-- Macro Jinja2. -->
 
-<!-- Una macro permite reutilizar una estructura
-     HTML sin escribir el mismo código varias veces. -->
+<!-- Una macro permite reutilizar una estructura HTML sin escribir el mismo código varias veces. -->
 
 {% macro mostrar_tarjetas(seccion, elementos, icono, mensaje) %}
 
@@ -488,7 +518,7 @@
 {% endmacro %}
 
 
-<!--Experiencia-->
+<!-- Experiencia -->
 
 <section class="seccion" id="experiencia">
 
@@ -614,8 +644,7 @@
 
                 <article class="habilidad">
 
-                    <!-- El porcentaje de MySQL controla
-                         el gráfico circular mediante CSS. -->
+                    <!-- El porcentaje de MySQL controla el gráfico circular mediante CSS. -->
 
                     <div class="circulo"
                          style="--nivel: {{ habilidad.porcentaje }}%">
@@ -655,7 +684,7 @@
 </section>
 
 
-<!--Proyectos-->
+<!-- Proyectos -->
 
 <section class="seccion seccion-proyectos"
          id="proyectos">
@@ -693,7 +722,7 @@
 </section>
 
 
-<!--Contacto-->
+<!-- Contacto -->
 
 <section class="seccion" id="contacto">
 

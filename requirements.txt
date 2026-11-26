@@ -25,3 +25,6 @@ gunicorn>=23,<24
 
 # Validación de direcciones de correo electrónico
 email-validator>=2,<3
+
+# Limitación de solicitudes e intentos de acceso
+Flask-Limiter>=4,<5

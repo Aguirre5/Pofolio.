@@ -214,8 +214,7 @@ button:focus-visible {
     /* Sombra marcada, estilo monocromático. */
     box-shadow: 12px 12px 0 var(--grafito);
 
-    /* DINAMISMO VISUAL:
-       Animación de entrada de la tarjeta. */
+    /* DINAMISMO VISUAL: Animación de entrada de la tarjeta. */
 
     animation: aparecer 0.6s ease-out both;
 
@@ -553,8 +552,7 @@ footer small {
 
 }
 
-/* Configuración de usuarios
-   que prefieren reducir las animaciones. */
+/* Configuración de usuarios que prefieren reducir las animaciones. */
 
 @media (prefers-reduced-motion: reduce) {
 
@@ -569,9 +567,7 @@ footer small {
 }
 
 
-/* ==========================================
-   14. REDES SOCIALES DE LA BARRA SUPERIOR
-   ========================================== */
+/* 14. REDES SOCIALES DE LA BARRA SUPERIOR */
 
 .redes-navbar {
 
@@ -601,9 +597,7 @@ footer small {
 }
 
 
-/* ==========================================
-   15. BANNER PRINCIPAL
-   ========================================== */
+/* 15. BANNER PRINCIPAL */
 
 .hero {
 
@@ -773,9 +767,7 @@ footer small {
 }
 
 
-/* ==========================================
-   16. PERFIL PERSONAL
-   ========================================== */
+/* 16. PERFIL PERSONAL */
 
 .presentacion {
 
@@ -884,9 +876,7 @@ footer small {
 }
 
 
-/* ==========================================
-   17. NAVEGACIÓN ENTRE SECCIONES
-   ========================================== */
+/* 17. NAVEGACIÓN ENTRE SECCIONES */
 
 html {
 
@@ -933,9 +923,7 @@ html {
 }
 
 
-/* ==========================================
-   18. SECCIONES DEL PORTFOLIO
-   ========================================== */
+/* 18. SECCIONES DEL PORTFOLIO */
 
 .seccion {
 
@@ -994,9 +982,7 @@ html {
 }
 
 
-/* ==========================================
-   19. TARJETAS DE CONTENIDO
-   ========================================== */
+/* 19. TARJETAS DE CONTENIDO */
 
 .tarjetas-grid {
 
@@ -1119,9 +1105,7 @@ html {
 }
 
 
-/* ==========================================
-   20. ESTADO SIN INFORMACIÓN
-   ========================================== */
+/* 20. ESTADO SIN INFORMACIÓN */
 
 .contenido-vacio {
 
@@ -1156,9 +1140,7 @@ html {
 }
 
 
-/* ==========================================
-   21. HARD SKILLS Y SOFT SKILLS
-   ========================================== */
+/* 21. HARD SKILLS Y SOFT SKILLS */
 
 .titulo-habilidades {
 
@@ -1211,9 +1193,7 @@ html {
 }
 
 
-/* ==========================================
-   22. GRÁFICOS CIRCULARES
-   ========================================== */
+/* 22. GRÁFICOS CIRCULARES */
 
 .circulo {
 
@@ -1275,9 +1255,7 @@ html {
 }
 
 
-/* ==========================================
-   23. SECCIÓN DE PROYECTOS
-   ========================================== */
+/* 23. SECCIÓN DE PROYECTOS */
 
 .seccion-proyectos {
 
@@ -1318,9 +1296,7 @@ html {
 }
 
 
-/* ==========================================
-   24. CONTACTO
-   ========================================== */
+/* 24. CONTACTO */
 
 .contacto-email {
 
@@ -1339,9 +1315,7 @@ html {
 }
 
 
-/* ==========================================
-   25. RESPONSIVE: TABLET
-   ========================================== */
+/* 25. RESPONSIVE: TABLET */
 
 @media (max-width: 991px) {
 
@@ -1368,9 +1342,7 @@ html {
 }
 
 
-/* ==========================================
-   26. RESPONSIVE: MOBILE
-   ========================================== */
+/* 26. RESPONSIVE: MOBILE */
 
 @media (max-width: 575px) {
 
@@ -1477,8 +1449,7 @@ html {
 }
 
 
-/* Accesibilidad: respetamos la preferencia
-   del usuario por reducir el movimiento. */
+/* Accesibilidad: respetamos la preferencia del usuario por reducir el movimiento. */
 
 @media (prefers-reduced-motion: reduce) {
 
@@ -1491,9 +1462,7 @@ html {
 }
 
 
-/* ==========================================
-   27. IDENTIDAD VISUAL DEFINITIVA
-   ========================================== */
+/* 27. IDENTIDAD VISUAL DEFINITIVA */
 
 .logo-marca {
 
@@ -1538,12 +1507,9 @@ html {
 }
 
 
-/* ==========================================
-   28. PERFECCIONAMIENTO DEL BANNER
-   ========================================== */
+/* 28. PERFECCIONAMIENTO DEL BANNER */
 
-/* Superposición para mejorar la legibilidad
-   cuando utilizamos fotografías de fondo. */
+/* Superposición para mejorar la legibilidad cuando utilizamos fotografías de fondo. */
 
 .banner::after {
 
@@ -1610,9 +1576,7 @@ html {
 }
 
 
-/* ==========================================
-   29. FOTOGRAFÍA DE PERFIL
-   ========================================== */
+/* 29. FOTOGRAFÍA DE PERFIL */
 
 .foto-perfil {
 
@@ -1635,12 +1599,9 @@ html {
 }
 
 
-/* ==========================================
-   30. DETALLES EDITORIALES
-   ========================================== */
+/* 30. DETALLES EDITORIALES */
 
-/* Incorporamos una pequeña línea decorativa
-   debajo de los encabezados de cada sección. */
+/* Incorporamos una pequeña línea decorativa debajo de los encabezados de cada sección. */
 
 .encabezado-seccion > div::after {
 
@@ -1667,9 +1628,7 @@ html {
 }
 
 
-/* ==========================================
-   31. UNIFICACIÓN DE LAS TARJETAS
-   ========================================== */
+/* 31. UNIFICACIÓN DE LAS TARJETAS */
 
 .tarjeta {
 
@@ -1697,8 +1656,7 @@ html {
 
 }
 
-/* Conservamos las imágenes en blanco y negro,
-   incluso cuando el usuario pasa el cursor. */
+/* Conservamos las imágenes en blanco y negro, incluso cuando el usuario pasa el cursor. */
 
 .imagen-tarjeta:hover {
 
@@ -1707,12 +1665,9 @@ html {
 }
 
 
-/* ==========================================
-   32. MENSAJES DEL SISTEMA
-   ========================================== */
+/* 32. MENSAJES DEL SISTEMA */
 
-/* Personalizamos las alertas de Bootstrap
-   para mantener nuestra identidad visual. */
+/* Personalizamos las alertas de Bootstrap para mantener nuestra identidad visual. */
 
 .alert {
 
@@ -1753,9 +1708,7 @@ html {
 }
 
 
-/* ==========================================
-   33. SELECCIÓN DE TEXTO
-   ========================================== */
+/* 33. SELECCIÓN DE TEXTO */
 
 ::selection {
 
@@ -1766,9 +1719,7 @@ html {
 }
 
 
-/* ==========================================
-   34. ACCESIBILIDAD Y NAVEGACIÓN
-   ========================================== */
+/* 34. ACCESIBILIDAD Y NAVEGACIÓN */
 
 .nav-secciones a:focus-visible {
 
@@ -1797,9 +1748,7 @@ html {
 }
 
 
-/* ==========================================
-   35. AJUSTES FINALES PARA MÓVILES
-   ========================================== */
+/* 35. AJUSTES FINALES PARA MÓVILES */
 
 @media (max-width: 575px) {
 
@@ -1856,8 +1805,7 @@ html {
 }
 
 
-/* Accesibilidad: desactivar animaciones
-   para usuarios sensibles al movimiento. */
+/* Accesibilidad: desactivar animaciones para usuarios sensibles al movimiento. */
 
 @media (prefers-reduced-motion: reduce) {
 
@@ -1875,9 +1823,7 @@ html {
 
 }
 
-/* ==========================================
-   36. BOTONES DE ADMINISTRACIÓN
-   ========================================== */
+/* 36. BOTONES DE ADMINISTRACIÓN */
 
 .btn-icono {
 
@@ -1905,8 +1851,7 @@ html {
 
     font-size: 15px;
 
-    /* DINAMISMO VISUAL:
-       Transición de color, sombra y posición. */
+    /* DINAMISMO VISUAL: Transición de color, sombra y posición. */
 
     transition:
 
@@ -1967,9 +1912,7 @@ html {
 }
 
 
-/* ==========================================
-   37. CONTROLES DE LAS TARJETAS
-   ========================================== */
+/* 37. CONTROLES DE LAS TARJETAS */
 
 .controles {
 
@@ -2014,9 +1957,7 @@ html {
 }
 
 
-/* ==========================================
-   38. EDICIÓN DEL BANNER Y PERFIL
-   ========================================== */
+/* 38. EDICIÓN DEL BANNER Y PERFIL */
 
 .editar-banner {
 
@@ -2043,9 +1984,7 @@ html {
 }
 
 
-/* ==========================================
-   39. VENTANAS MODALES
-   ========================================== */
+/* 39. VENTANAS MODALES */
 
 .modal-portfolio {
 
@@ -2098,9 +2037,7 @@ html {
 }
 
 
-/* ==========================================
-   40. FORMULARIOS DE ADMINISTRACIÓN
-   ========================================== */
+/* 40. FORMULARIOS DE ADMINISTRACIÓN */
 
 .formulario-body {
 
@@ -2161,9 +2098,7 @@ html {
 }
 
 
-/* ==========================================
-   41. MENSAJES DE VALIDACIÓN
-   ========================================== */
+/* 41. MENSAJES DE VALIDACIÓN */
 
 .error-campo {
 
@@ -2178,9 +2113,7 @@ html {
 }
 
 
-/* ==========================================
-   42. BOTONES DE LOS FORMULARIOS
-   ========================================== */
+/* 42. BOTONES DE LOS FORMULARIOS */
 
 .acciones-formulario {
 
@@ -2235,9 +2168,7 @@ html {
 }
 
 
-/* ==========================================
-   43. BOTONES EN LA SECCIÓN OSCURA
-   ========================================== */
+/* 43. BOTONES EN LA SECCIÓN OSCURA */
 
 .seccion-proyectos .btn-agregar {
 
@@ -2256,9 +2187,7 @@ html {
 }
 
 
-/* ==========================================
-   44. CRUD RESPONSIVE
-   ========================================== */
+/* 44. CRUD RESPONSIVE */
 
 @media (max-width: 575px) {
 
@@ -2312,4 +2241,31 @@ html {
 
     }
 
+}
+
+
+/* CV */
+
+.acciones-cv {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.btn-cv-pendiente {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.btn-cv-pendiente:hover {
+    transform: none;
+    box-shadow: none;
+    background: var(--negro);
+}
+
+.cv-aviso {
+    color: var(--gris);
+    font-size: 12px;
 }
