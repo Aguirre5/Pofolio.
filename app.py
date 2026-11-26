@@ -191,7 +191,7 @@ def probar_poo():
     print("\nPrueba finalizada.")
 
 # ==========================================
-#CREACIÓN DEL ADMINISTRADOR
+#Admin creation.
 
 @app.cli.command("crear-admin")
 
@@ -286,6 +286,39 @@ def crear_admin(username, password, nombre):
         raise click.ClickException(
             "No se pudo crear un administrador."
         )
+
+
+#Comprobación de usuario y perfil.
+
+@app.cli.command("ver-admin")
+def ver_admin():
+
+    # Buscamos usuario registrado.
+    usuario = Usuario.query.first()
+
+    # ¿Existe?
+    if usuario is None:
+        click.echo("No hay administradores registrados.")
+        return
+
+    # Buscamos perfil relacionado.
+    perfil = Perfil.query.filter_by(
+        usuario_id=usuario.id
+    ).first()
+
+    print("\nADMINISTRADOR DEL PORTFOLIO.")
+
+    print("ID:", usuario.id)
+    print("Usuario:", usuario.username)
+
+    if perfil:
+
+        print("Nombre:", perfil.nombre)
+        print("Titulo:", perfil.titulo)
+        print("ID del perfil:", perfil.id)
+
+    else:
+        print("El usuario no tiene un perfil asociado.")
 
 #Ejecución servidor.
 
