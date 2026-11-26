@@ -1,9 +1,16 @@
 from flask import Flask
+
 # Trabajo con MySQL.
 from flask_sqlalchemy import SQLAlchemy
 
-# Consultas SQL.
-from sqlalchemy import text
+# Herram. SQLAlchemy.
+from sqlalchemy import text, inspect
+
+#Herram. diseño físico.
+from sqlalchemy.schema import CreateTable
+from sqlalchemy.dialects import mysql
+
+
 
 # config.
 from config import Config
