@@ -58,7 +58,7 @@ def index():
     # Flask convierte el diccionario a JSON.
     return {
 
-        "proyecto": "Portfolio Full Stack",
+        "proyecto": "P. Portfolio.",
 
         "nombre": perfil.nombre,
 
