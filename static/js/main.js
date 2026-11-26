@@ -1,13 +1,9 @@
-// ==========================================
-// INICIALIZACIÓN DEL SISTEMA CRUD
-// ==========================================
+// CRUD.
 
 document.addEventListener("DOMContentLoaded", () => {
 
 
-    // ======================================
-    // CONFIRMACIÓN DE ELIMINACIONES
-    // ======================================
+    // Eliminacionón form.
 
     const formulariosEliminar = document.querySelectorAll(
         ".form-eliminar"
@@ -34,9 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-    // ======================================
-    // CONFIGURACIÓN DE LA VENTANA MODAL
-    // ======================================
+    // Config. ventanas.
 
     const modalElemento = document.getElementById(
         "modalEdicion"
@@ -62,9 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let editando = false;
 
 
-    // ======================================
-    // ABRIR FORMULARIOS
-    // ======================================
+    // Abrir forms.
 
     const botonesEdicion = document.querySelectorAll(
         "[data-editar]"
@@ -97,9 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-    // ======================================
-    // DETECTAR CUANDO SE GUARDAN LOS CAMBIOS
-    // ======================================
+    // ¿Se guardó?
 
     frame.addEventListener("load", () => {
 
@@ -176,9 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-    // ======================================
-    // LIMPIAR LA VENTANA AL CERRARLA
-    // ======================================
+    // Limpia ventana.
 
     modalElemento.addEventListener(
         "hidden.bs.modal",

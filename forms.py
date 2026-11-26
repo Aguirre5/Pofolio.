@@ -1,6 +1,4 @@
-# ==========================================
 # IMPORTACIONES
-# ==========================================
 
 from flask_wtf import FlaskForm
 
@@ -25,9 +23,7 @@ from wtforms.validators import (
 )
 
 
-# ==========================================
 # VALIDACIONES PERSONALIZADAS
-# ==========================================
 
 # Solamente permitimos enlaces HTTP y HTTPS.
 def validar_http(form, field):
@@ -50,9 +46,7 @@ def limpiar_texto(valor):
     return valor
 
 
-# ==========================================
 # FORMULARIO DE INICIO DE SESIÓN
-# ==========================================
 
 class LoginForm(FlaskForm):
 
@@ -72,9 +66,7 @@ class LoginForm(FlaskForm):
     submit = SubmitField("Iniciar sesión")
 
 
-# ==========================================
 # FORMULARIO DE ACCIONES PROTEGIDAS
-# ==========================================
 
 # Utilizado para cerrar sesión y eliminar registros.
 class AccionForm(FlaskForm):
@@ -82,9 +74,7 @@ class AccionForm(FlaskForm):
     submit = SubmitField("Confirmar")
 
 
-# ==========================================
 # FORMULARIO DEL PERFIL PERSONAL
-# ==========================================
 
 class PerfilForm(FlaskForm):
 
@@ -169,9 +159,7 @@ class PerfilForm(FlaskForm):
     submit = SubmitField("Guardar cambios")
 
 
-# ==========================================
 # FORMULARIO DE EXPERIENCIA LABORAL
-# ==========================================
 
 class ExperienciaForm(FlaskForm):
 
@@ -212,9 +200,7 @@ class ExperienciaForm(FlaskForm):
     submit = SubmitField("Guardar experiencia")
 
 
-# ==========================================
 # FORMULARIO DE EDUCACIÓN
-# ==========================================
 
 class EducacionForm(FlaskForm):
 
@@ -255,9 +241,7 @@ class EducacionForm(FlaskForm):
     submit = SubmitField("Guardar educación")
 
 
-# ==========================================
 # FORMULARIO DE HABILIDADES
-# ==========================================
 
 class HabilidadForm(FlaskForm):
 
@@ -296,9 +280,7 @@ class HabilidadForm(FlaskForm):
     submit = SubmitField("Guardar habilidad")
 
 
-# ==========================================
 # FORMULARIO DE PROYECTOS
-# ==========================================
 
 class ProyectoForm(FlaskForm):
 

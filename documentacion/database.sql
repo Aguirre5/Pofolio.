@@ -77,4 +77,4 @@ CREATE TABLE IF NOT EXISTS proyectos (
 -- Usuario registra experiencias y educación.
 -- Usuario desarrolla proyectos.
 
--- Fin diseño fisico db MySQL.
+-- Fin diseño fisico db from my MySQL.

@@ -1,4 +1,4 @@
-# Modelo relacional de Portfolio.
+# Modelo Portfolio.
 
 ## Entidades:
 
@@ -54,7 +54,7 @@ PROYECTOS
 - enlace
 - imagen
 
-## Relaciones
+## Relaciones:
 
 - Usuarios - Perfil: 1 a 1.
 - Usuarios - Experiencias: 1 a N.
@@ -62,15 +62,15 @@ PROYECTOS
 - Usuarios - Habilidades: 1 a N.
 - Usuarios - Proyectos: 1 a N.
 
-## Restricciones
+## Restricciones:
 
-- Los nombres de usuario son unicos.
+- Los nombres de usuario son únicos.
 - Las contraseñas se almacenan mediante hash.
-- Cada usuario puede tener como maximo un perfil.
+- Cada usuario puede tener como máximo un perfil.
 - Los porcentajes deben estar entre 0 y 100.
-- Las claves foraneas deben referenciar usuarios existentes.
+- Las claves foráneas deben referenciar usuarios existentes.
 
-## Diagrama entidad-relacion
+## Diagrama entidad-relacion, (obvi DER).
 
 ```mermaid
 erDiagram

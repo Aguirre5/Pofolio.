@@ -43,14 +43,14 @@ from forms import (
 # Permite controlar errores de la base de datos.
 from sqlalchemy.exc import SQLAlchemyError
 
-# Herram. SQLAlchemy.
+# Herramientas de SQLAlchemy.
 from sqlalchemy import text, inspect
 
 # Herram. diseño físico.
 from sqlalchemy.schema import CreateTable
 from sqlalchemy.dialects import mysql
 
-# Permite trabajr on archivos y carpetas.
+# Herramientas para trabajar con archivos y carpetas.
 from pathlib import Path
 
 # config.
@@ -65,11 +65,10 @@ from tables import (
     Educacion,
     Habilidad,
     Proyecto,
-    Contenido,
     TarjetaExperiencia,
     TarjetaEducacion,
     TarjetaProyecto,
-    presentar_contenido
+    presentar_contenido,
 )
 #-----------------------------------------
 #Aplicación:
@@ -141,11 +140,7 @@ def cargar_usuario(usuario_id):
 
 # Configuración CRUD-
 
-# Cada sección tiene asociado:
-# 1. Modelo de MySQL.
-# 2. Formulario Flask-WTF.
-# 3. Nombre descriptivo.
-# 4. Identificador dentro del HTML.
+# Cada sección asocia un modelo de MySQL, un formulario Flask-WTF, un nombre descriptivo y un identificador HTML.
 
 SECCIONES = {
 
@@ -200,7 +195,6 @@ def index():
     uid = perfil.usuario_id
 
 
-    # ---------------------------------------
     # Consultas SQL.
 
     # Recuperamos todas las experiencias laborales.
@@ -233,9 +227,7 @@ def index():
 
 
     # -------------------------------------------
-    #Polimorfismo.
-    # Utilizamos una misma función para presentar
-    # diferentes tipos de contenido.
+    # Aplicamos polimorfismo con una misma función para presentar diferentes tipos de contenido.
 
     tarjetas = {
 
@@ -281,9 +273,7 @@ def index():
     }
 
 
-    # ======================================
-    # COMPROBAR IMÁGENES LOCALES
-    # ======================================
+    # Comprobamos la disponibilidad de imágenes locales.
 
     # Verificamos si existe una fotografía de perfil.
     foto_local = Path(
@@ -299,9 +289,7 @@ def index():
         "banner.webp"
     ).is_file()
 
-    # Jinja2 recibe.
-
-    # Comprobamos si el CV se encuentra disponible.
+    # Comprobamos si el CV se encuentra disponible para Jinja2.
     cv_disponible = Path(
         app.static_folder,
         "docs",
@@ -385,8 +373,7 @@ def listar_tablas():
 @app.cli.command("export-sql")
 def exportar_sql():
 
-    # Creamos carpeta de documentación.
-    # si todavía no existe:
+    # Creamos la carpeta de documentación si todavía no existe.
     carpeta = Path(app.root_path) / "documentacion"
     carpeta.mkdir(exist_ok=True)
 
@@ -400,8 +387,7 @@ def exportar_sql():
         ""
     ]
 
-    # Recorremos las tablas respetando el orden
-    # de dependencias y claves foráneas.
+    # Recorremos las tablas respetando las dependencias y claves foráneas.
     for tabla in db.metadata.sorted_tables:
 
         # Convertimos cada modelo a código SQL.
@@ -538,8 +524,7 @@ def crear_admin(username, password, nombre):
         # Agregamos usuario a la sesión.
         db.session.add(usuario)
 
-        # Obtenemos el ID generado por MySQL,
-        # sin confirmar todavía la transacción.
+        # Obtenemos el ID generado por MySQL sin confirmar todavía la transacción.
         db.session.flush()
 
         # Creamos perfil personal asociado.
@@ -610,11 +595,10 @@ def ver_admin():
 #Inicio de sesión.
 
 @app.route("/login", methods=["GET", "POST"])
-@limiter.limit("5 per minute", methods = ["POST"])
+@limiter.limit("5 per minute", methods=["POST"])
 def login():
 
-    # Si el usuario ya inició sesión,
-    # lo redirigimos al portfolio.
+    # Si el usuario ya inició sesión, lo redirigimos al portfolio.
     if current_user.is_authenticated:
 
         return redirect(url_for("index"))
@@ -622,8 +606,7 @@ def login():
     # Creamos una instancia del formulario.
     form = LoginForm()
 
-    # Comprobamos que el formulario haya sido enviado
-    # correctamente y que su token CSRF sea válido.
+    # Comprobamos que el formulario se haya enviado correctamente y que su token CSRF sea válido.
     if form.validate_on_submit():
 
         # Buscamos el usuario en MySQL.
@@ -633,8 +616,7 @@ def login():
 
         ).first()
 
-        # Comprobamos que el usuario exista
-        # y que la contraseña coincida con su hash.
+        # Comprobamos que el usuario exista y que la contraseña coincida con su hash.
         if usuario and usuario.verificar_password(
             form.password.data
         ):
@@ -651,8 +633,7 @@ def login():
             # Regresamos a la página principal.
             return redirect(url_for("index"))
 
-        # Utilizamos un mensaje genérico para no revelar
-        # si un determinado usuario existe o no.
+        # Usamos un mensaje genérico para no revelar si el usuario existe.
         flash(
             "Usuario o contraseña incorrectos.",
             "danger"
@@ -697,7 +678,7 @@ def logout():
 @login_required
 def panel():
 
-    # Solo registrados pueden acceder a esta ruta.
+    # Solo los usuarios autenticados pueden acceder a esta ruta.
 
     return {
         "estado": "Acceso autorizado",
@@ -706,19 +687,15 @@ def panel():
     }
 
 
-# ==========================================
-# FUNCIONES AUXILIARES DEL CRUD
-# ==========================================
+# CRUD
 
 def actualizar_datos(registro, form):
 
-    # Recorremos los campos definidos
-    # por nuestros formularios Flask-WTF.
+    # Recorremos los campos definidos por nuestros formularios Flask-WTF.
 
     for campo in form:
 
-        # Excluimos los campos que no pertenecen
-        # a las columnas de MySQL.
+        # Excluimos los campos que no pertenecen a las columnas de MySQL.
 
         if campo.name in ("csrf_token", "submit"):
             continue
@@ -730,8 +707,7 @@ def actualizar_datos(registro, form):
 
             valor = valor.strip()
 
-            # Los campos opcionales vacíos
-            # se almacenarán como NULL.
+            # Los campos opcionales vacíos se almacenarán como NULL.
             if valor == "":
                 valor = None
 
@@ -763,8 +739,7 @@ def guardar_cambios():
 
 def finalizar_edicion(ancla):
 
-    # Si estamos utilizando una ventana modal,
-    # mostramos una página de confirmación especial.
+    # Si se utiliza una ventana modal, mostramos una página de confirmación especial.
     if request.args.get("modal") == "1":
 
         return redirect(
@@ -774,15 +749,12 @@ def finalizar_edicion(ancla):
             )
         )
 
-    # Si el formulario se abrió directamente,
-    # regresamos al portfolio.
+    # Si el formulario se abrió directamente, regresamos al portfolio.
     return redirect(
         url_for("index", _anchor=ancla)
     )
 
-# ==========================================
-# EDITAR PERFIL PERSONAL
-# ==========================================
+# Edit. perfil.
 
 @app.route(
     "/perfil/editar",
@@ -791,14 +763,12 @@ def finalizar_edicion(ancla):
 @login_required
 def editar_perfil():
 
-    # Buscamos únicamente el perfil perteneciente
-    # al usuario que inició sesión.
+    # Buscamos únicamente el perfil perteneciente al usuario que inició sesión.
     perfil = Perfil.query.filter_by(
         usuario_id=current_user.id
     ).first_or_404()
 
-    # obj=perfil carga automáticamente los datos
-    # actuales de MySQL dentro del formulario.
+    # obj=perfil carga automáticamente los datos actuales de MySQL en el formulario.
     form = PerfilForm(obj=perfil)
 
     # Procesamos el formulario cuando se envía.
@@ -829,9 +799,7 @@ def editar_perfil():
     )
 
 
-# ==========================================
-# CREATE: AGREGAR CONTENIDO
-# ==========================================
+# Crear contenido.
 
 @app.route(
     "/<seccion>/agregar",
@@ -887,9 +855,7 @@ def agregar(seccion):
 
     )
 
-# ==========================================
-# UPDATE: MODIFICAR CONTENIDO
-# ==========================================
+# Modif. cont. .
 
 @app.route(
     "/<seccion>/editar/<int:id>",
@@ -905,8 +871,7 @@ def editar(seccion, id):
 
     modelo, formulario, nombre, ancla = SECCIONES[seccion]
 
-    # Buscamos el registro por su clave primaria
-    # y comprobamos que pertenezca al usuario actual.
+    # Buscamos el registro por su clave primaria y comprobamos que pertenezca al usuario actual.
     registro = modelo.query.filter_by(
 
         id=id,
@@ -944,9 +909,7 @@ def editar(seccion, id):
     )
 
 
-# ==========================================
-# DELETE: ELIMINAR CONTENIDO
-# ==========================================
+# Elim. cont.
 
 @app.route(
     "/<seccion>/eliminar/<int:id>",
@@ -968,8 +931,7 @@ def eliminar(seccion, id):
 
     modelo, formulario, nombre, ancla = SECCIONES[seccion]
 
-    # Buscamos solamente registros pertenecientes
-    # al administrador autenticado.
+    # Buscamos únicamente registros pertenecientes al administrador autenticado.
     registro = modelo.query.filter_by(
 
         id=id,
