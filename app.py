@@ -1,3 +1,5 @@
+import click
+
 from flask import Flask
 
 # Herram. SQLAlchemy.
@@ -21,7 +23,12 @@ from tables import (
     Experiencia,
     Educacion,
     Habilidad,
-    Proyecto
+    Proyecto,
+    Contenido,
+    TarjetaExperiencia,
+    TarjetaEducacion,
+    TarjetaProyecto,
+    presentar_contenido
 )
 
 #Aplicación:
@@ -134,6 +141,55 @@ def exportar_sql():
 
     print("Diseno fisico exportado.")
     print("Archivo:", archivo)
+
+# Agregado de abstracto POO:
+
+@app.cli.command("test-poo")
+def probar_poo():
+
+    # Creamos objetos de prueba.
+
+    experiencia = Experiencia(
+        puesto="Desarrollador",
+        empresa="Empresa de prueba"
+    )
+
+    educacion = Educacion(
+        titulo="Curso de Python",
+        institucion="Institucion de prueba"
+    )
+
+    proyecto = Proyecto(
+        nombre="Portfolio Full Stack",
+        fecha="2026"
+    )
+
+    # Creamos objetos de clases derivadas.
+    contenidos = [
+
+        TarjetaExperiencia(experiencia),
+
+        TarjetaEducacion(educacion),
+
+        TarjetaProyecto(proyecto)
+
+    ]
+
+    print("\nPRUEBA DE POLIMORFISMO")
+    print("-------------------------")
+
+    # Aplicamos la misma función a distintos objetos.
+    for contenido in contenidos:
+
+        datos = presentar_contenido(contenido)
+
+        print("\nClase:", type(contenido).__name__)
+
+        print("Titulo:", datos["titulo"])
+
+        print("Detalle:", datos["detalle"])
+
+    print("\nPrueba finalizada correctamente.")
 
 
 
