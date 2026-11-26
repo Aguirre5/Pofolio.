@@ -1,3 +1,5 @@
+#Centralización de proyecto de configuración.
+
 # Acceso a variables de entorno.
 import os
 

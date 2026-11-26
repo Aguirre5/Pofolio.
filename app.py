@@ -1,19 +1,57 @@
 from flask import Flask
+# Trabajo con MySQL.
+from flask_sqlalchemy import SQLAlchemy
+
+# Consultas SQL.
+from sqlalchemy import text
+
+# config.
+from config import Config
+
+#Aplicación:
 
 app = Flask(__name__)
 
-# RUTA PRINCIPAL DEL PORTFOLIO.
-# El decorador route vincula una URL con una función de Python.
+app.config.from_object(Config)
+db = SQLAlchemy(app)
+
+#Ruta principal Portfolio.
 
 @app.route("/")
 def index():
+    
+    return "Proyecto P. Portfolio."
 
-    # Retornamos el contenido que recibirá el navegador.
-    return "Proyecto Integrador - Portfolio Full Stack"
+#Conexión MYSQL prueba.
+@app.cli.command("test-db")
+def probar_base_datos():
+    try:
 
-# EJECUCIÓN SERVIDOR.
-# El archivo se ejecuta directamente.
+        # Ejecutamos consulta sencilla.
+        resultado = db.session.execute(
+            text("SELECT 1")
+        ).scalar()
+
+        # Comprobamos MySQL correctamente.
+        if resultado == 1:
+
+            print("Conexion con MySQL exitosa.")
+
+    except Exception as error:
+
+        # Mostramos error local.
+        print("Error de conexion:", error)
+
+        raise SystemExit(1)
+
+    finally:
+
+        # Liberamos sesión de bd.
+        db.session.remove()
+        
+        
+#Ejecución servidor.
 
 if __name__ == "__main__":
 
-    app.run(debug=True)
+    app.run()
