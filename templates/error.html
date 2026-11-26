@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+    Error {{ codigo }} | Portfolio
+
+{% endblock %}
+
+
+{% block content %}
+
+<section class="login-card">
+
+    <span class="etiqueta">
+
+        PORTFOLIO / SISTEMA
+
+    </span>
+
+    <h1>{{ codigo }}.</h1>
+
+    <h2>{{ titulo }}</h2>
+
+    <p class="texto-secundario">
+
+        {{ mensaje }}
+
+    </p>
+
+    <a href="{{ url_for('index') }}"
+       class="btn-dark-custom">
+
+        Volver al portfolio.
+
+    </a>
+
+</section>
+
+{% endblock %}

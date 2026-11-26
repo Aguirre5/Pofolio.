@@ -1,5 +1,9 @@
 import click
 
+# Protección contra intentos repetidos de acceso.
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+
 from flask import send_from_directory
 
 # Flask.
@@ -80,6 +84,21 @@ db.init_app(app)
 
 # Activamos CSRF para toda la aplicación.
 csrf = CSRFProtect(app)
+
+# Limitación de acceso.
+
+limiter = Limiter(
+
+    key_func=get_remote_address,
+
+    app=app,
+
+    default_limits=[],
+
+    storage_uri="memory://"
+
+)
+
 
 # Creamos el administrador de sesiones.
 login_manager = LoginManager(app)
@@ -591,6 +610,7 @@ def ver_admin():
 #Inicio de sesión.
 
 @app.route("/login", methods=["GET", "POST"])
+@limiter.limit("5 per minute, method:POST")
 def login():
 
     # Si el usuario ya inició sesión,
@@ -1020,6 +1040,27 @@ def descargar_cv():
         as_attachment=True
 
     )
+
+
+# Mensaje error: Demasiadas solic. .
+
+@app.errorhandler(429)
+def demasiadas_solicitudes(error):
+
+    return render_template(
+
+        "error.html",
+
+        codigo=429,
+
+        titulo="Demasiados intentos.",
+
+        mensaje=(
+            "Esperá un momento antes de volver "
+            "a intentar iniciar sesión."
+        )
+
+    ), 429
 
 
 #Ejecución servidor.

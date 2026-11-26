@@ -256,7 +256,7 @@
                         <i class="fa-brands fa-github"></i>
 
                     </a>
-
+                {% endif %}
                 {% if perfil.linkedin %}
 
                     <a href="{{ perfil.linkedin }}"
@@ -267,12 +267,10 @@
                         <i class="fa-brands fa-linkedin"></i>
 
                     </a>
-
                 {% endif %}
-
             </div>
 
-            <!-- DESCARGA DEL CURRICULUM VITAE -->
+            <!-- Descarga CV -->
 
             <div class="acciones-cv">
 
@@ -289,7 +287,7 @@
 
                 {% else %}
 
-                    <!-- Botón provisional hasta incorporar el PDF. -->
+                    <!-- Botón PDF. -->
 
                     <button type="button"
                             class="btn-dark-custom btn-cv-pendiente"
