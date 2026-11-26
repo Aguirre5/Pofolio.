@@ -1,0 +1,24 @@
+# Framework backend portfolio.
+Flask>=3.1,<4
+
+# Comunicación y administración de base de datos.
+Flask-SQLAlchemy>=3.1,<4
+
+# Administración de sesiones.
+Flask-Login>=0.6,<1
+
+# Formularios y sus validaciones.
+Flask-WTF>=1.2,<2
+WTForms>=3.2,<4
+
+# Conexión MySQL.
+PyMySQL>=1.1,<2
+
+# Soporte criptográfico.
+cryptography
+
+# Variables de entorno .env y lectura.
+python-dotenv>=1.0,<2
+
+# Ejecutor Render.
+gunicorn>=23,<24

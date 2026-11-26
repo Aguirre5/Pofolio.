@@ -1,0 +1,20 @@
+
+porfolio/
+.venv/
+venv/
+
+.env
+
+__pycache__/
+*.pyc
+*.pyo
+
+.vscode/
+
+instance/
+*.sqlite3
+
+Thumbs.db
+.DS_Store
+
+# Indica a Git qué archivos debe ignorar. 
