@@ -111,7 +111,7 @@ def exportar_sql():
     # Encabezado del documento.
     instrucciones = [
         "-- Proyecto Integrador P. Portfolio",
-        "-- Diseno fisico db MySQL.",
+        "-- Diseño físico db MySQL.",
         ""
     ]
 
@@ -139,10 +139,10 @@ def exportar_sql():
         encoding="utf-8"
     )
 
-    print("Diseno fisico exportado.")
+    print("Diseño físico exportado.")
     print("Archivo:", archivo)
 
-# Agregado de abstracto POO:
+#Agregado de abstracto POO:
 
 @app.cli.command("test-poo")
 def probar_poo():
@@ -175,8 +175,7 @@ def probar_poo():
 
     ]
 
-    print("\nPRUEBA DE POLIMORFISMO")
-    print("-------------------------")
+    print("\nPRUEBA")
 
     # Aplicamos la misma función a distintos objetos.
     for contenido in contenidos:
@@ -189,9 +188,104 @@ def probar_poo():
 
         print("Detalle:", datos["detalle"])
 
-    print("\nPrueba finalizada correctamente.")
+    print("\nPrueba finalizada.")
 
+# ==========================================
+#CREACIÓN DEL ADMINISTRADOR
 
+@app.cli.command("crear-admin")
+
+# Solicitamos datos desde la terminal.
+@click.option("--username", prompt="Usuario")
+
+@click.option(
+    "--password",
+    prompt="Contraseña",
+    hide_input=True,
+    confirmation_prompt=True
+)
+
+@click.option("--nombre", prompt="Nombre completo")
+
+def crear_admin(username, password, nombre):
+
+    # Eliminamos espacios innecesarios.
+    username = username.strip()
+    nombre = nombre.strip()
+
+    # Validamos campos obligatorios.
+    if not username or len(username) > 80:
+
+        raise click.ClickException(
+            "El nombre de usuario debe tener entre 1 y 80 caracteres."
+        )
+
+    if not nombre or len(nombre) > 100:
+
+        raise click.ClickException(
+            "El nombre completo debe tener entre 1 y 100 caracteres."
+        )
+
+    # Comprobamos administrador.
+    if Usuario.query.first() is not None:
+
+        raise click.ClickException(
+            "El portfolio ya tiene un administrador."
+        )
+
+    # Validamos longitud de contraseña.
+    if len(password) < 12:
+
+        raise click.ClickException(
+            "La contraseña debe tener al menos 12 caracteres."
+        )
+
+    # Creamos una instancia del modelo Usuario.
+    usuario = Usuario(
+        username=username
+    )
+
+    # Generamos hash:
+    usuario.establecer_password(password)
+
+    try:
+
+        # Agregamos usuario a la sesión.
+        db.session.add(usuario)
+
+        # Obtenemos el ID generado por MySQL,
+        # sin confirmar todavía la transacción.
+        db.session.flush()
+
+        # Creamos perfil personal asociado.
+        perfil = Perfil(
+
+            usuario_id=usuario.id,
+
+            nombre=nombre,
+
+            titulo="Portfolio profesional",
+
+            descripcion="Completar presentación personal."
+
+        )
+
+        # Agregamos el perfil a la sesión.
+        db.session.add(perfil)
+
+        # Confirmamos ambos registros en MySQL.
+        db.session.commit()
+
+        click.echo("\nAdministrador creado correctamente.")
+        click.echo("Perfil personal creado correctamente.")
+
+    except Exception:
+
+        # Si ocurre un error, deshacemos los cambios.
+        db.session.rollback()
+        raise click.ClickException(
+            "No se pudo crear un administrador."
+        )
 
 #Ejecución servidor.
 
