@@ -610,7 +610,7 @@ def ver_admin():
 #Inicio de sesión.
 
 @app.route("/login", methods=["GET", "POST"])
-@limiter.limit("5 per minute, method:POST")
+@limiter.limit("5 per minute", methods = ["POST"])
 def login():
 
     # Si el usuario ya inició sesión,
