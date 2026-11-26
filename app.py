@@ -208,9 +208,28 @@ def index():
     }
 
 
-    # ---------------------------------
-    #Envío info. a Jinja2.
+    # ======================================
+    # COMPROBAR IMÁGENES LOCALES
+    # ======================================
 
+    # Verificamos si existe una fotografía de perfil.
+    foto_local = Path(
+        app.static_folder,
+        "img",
+        "perfil.webp"
+    ).is_file()
+
+    # Verificamos si existe un banner personalizado.
+    banner_local = Path(
+        app.static_folder,
+        "img",
+        "banner.webp"
+    ).is_file()
+
+
+    # ======================================
+    # ENVÍO DE INFORMACIÓN A JINJA2
+    # ======================================
 
     return render_template(
 
@@ -222,7 +241,11 @@ def index():
 
         habilidades=habilidades,
 
-        accion=AccionForm()
+        accion=AccionForm(),
+
+        foto_local=foto_local,
+
+        banner_local=banner_local
 
     )
 

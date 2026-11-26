@@ -1489,3 +1489,388 @@ html {
     }
 
 }
+
+
+/* ==========================================
+   27. IDENTIDAD VISUAL DEFINITIVA
+   ========================================== */
+
+.logo-marca {
+
+    display: block;
+
+    width: 44px;
+
+    height: 44px;
+
+    flex-shrink: 0;
+
+    transition: transform 0.3s ease;
+
+}
+
+.marca:hover .logo-marca {
+
+    transform: rotate(-5deg);
+
+}
+
+.marca-identidad {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+
+}
+
+.marca-identidad small {
+
+    color: var(--gris);
+
+    font-size: 10px;
+
+    font-weight: 500;
+
+    letter-spacing: 0.5px;
+
+}
+
+
+/* ==========================================
+   28. PERFECCIONAMIENTO DEL BANNER
+   ========================================== */
+
+/* Superposición para mejorar la legibilidad
+   cuando utilizamos fotografías de fondo. */
+
+.banner::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background: linear-gradient(
+
+        90deg,
+
+        rgba(0, 0, 0, 0.35),
+
+        transparent
+
+    );
+
+    pointer-events: none;
+
+    z-index: 0;
+
+}
+
+/* La decoración permanece detrás del texto. */
+
+.banner-decoracion {
+
+    z-index: 1;
+
+}
+
+.banner-texto {
+
+    z-index: 2;
+
+}
+
+/* Entrada progresiva de la decoración floral. */
+
+.banner-decoracion {
+
+    animation: floral-entrada 1.4s ease-out;
+
+}
+
+@keyframes floral-entrada {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateX(20px);
+
+    }
+
+    to {
+
+        transform: translateX(0);
+
+    }
+
+}
+
+
+/* ==========================================
+   29. FOTOGRAFÍA DE PERFIL
+   ========================================== */
+
+.foto-perfil {
+
+    object-position: center;
+
+    transition:
+
+        transform 0.35s ease,
+
+        box-shadow 0.35s ease;
+
+}
+
+.foto-perfil:hover {
+
+    transform: scale(1.04);
+
+    box-shadow: 0 12px 28px #0004;
+
+}
+
+
+/* ==========================================
+   30. DETALLES EDITORIALES
+   ========================================== */
+
+/* Incorporamos una pequeña línea decorativa
+   debajo de los encabezados de cada sección. */
+
+.encabezado-seccion > div::after {
+
+    content: "";
+
+    display: block;
+
+    width: 35px;
+
+    height: 3px;
+
+    margin-top: 16px;
+
+    background: var(--rosa);
+
+    transition: width 0.3s ease;
+
+}
+
+.seccion:hover .encabezado-seccion > div::after {
+
+    width: 65px;
+
+}
+
+
+/* ==========================================
+   31. UNIFICACIÓN DE LAS TARJETAS
+   ========================================== */
+
+.tarjeta {
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+.tarjeta-contenido {
+
+    display: flex;
+
+    flex-direction: column;
+
+    flex: 1;
+
+    align-items: flex-start;
+
+}
+
+.tarjeta-contenido .btn-dark-custom {
+
+    margin-top: auto;
+
+}
+
+/* Conservamos las imágenes en blanco y negro,
+   incluso cuando el usuario pasa el cursor. */
+
+.imagen-tarjeta:hover {
+
+    filter: grayscale(100%) contrast(110%);
+
+}
+
+
+/* ==========================================
+   32. MENSAJES DEL SISTEMA
+   ========================================== */
+
+/* Personalizamos las alertas de Bootstrap
+   para mantener nuestra identidad visual. */
+
+.alert {
+
+    border-radius: 2px;
+
+    font-size: 14px;
+
+}
+
+.alert-success {
+
+    background: #e4ebe5;
+
+    color: var(--verde);
+
+    border: 1px solid #bac9bd;
+
+}
+
+.alert-danger {
+
+    background: #f3e3e6;
+
+    color: #713b47;
+
+    border: 1px solid #dfbfc6;
+
+}
+
+.alert-warning {
+
+    background: var(--floral);
+
+    color: var(--grafito);
+
+    border: 1px solid #d6c8b2;
+
+}
+
+
+/* ==========================================
+   33. SELECCIÓN DE TEXTO
+   ========================================== */
+
+::selection {
+
+    background: var(--rosa);
+
+    color: var(--negro);
+
+}
+
+
+/* ==========================================
+   34. ACCESIBILIDAD Y NAVEGACIÓN
+   ========================================== */
+
+.nav-secciones a:focus-visible {
+
+    border-color: var(--rosa);
+
+}
+
+.seccion-proyectos a:focus-visible {
+
+    outline-color: var(--rosa);
+
+}
+
+/* Evitamos desbordamientos por enlaces largos. */
+
+.tarjeta-contenido,
+
+.contacto-email,
+
+.detalle {
+
+    min-width: 0;
+
+    overflow-wrap: anywhere;
+
+}
+
+
+/* ==========================================
+   35. AJUSTES FINALES PARA MÓVILES
+   ========================================== */
+
+@media (max-width: 575px) {
+
+    .logo-marca {
+
+        width: 38px;
+
+        height: 38px;
+
+    }
+
+    .marca-identidad {
+
+        font-size: 12px;
+
+    }
+
+    .marca-identidad small {
+
+        display: none;
+
+    }
+
+    .nav-secciones a {
+
+        padding: 7px 2px;
+
+    }
+
+    .encabezado-seccion {
+
+        gap: 10px;
+
+    }
+
+    .icono-seccion {
+
+        font-size: 20px;
+
+    }
+
+    .tarjeta-contenido {
+
+        padding: 20px;
+
+    }
+
+    .banner-decoracion {
+
+        opacity: 0.22;
+
+    }
+
+}
+
+
+/* Accesibilidad: desactivar animaciones
+   para usuarios sensibles al movimiento. */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .banner-decoracion,
+
+    .foto-perfil,
+
+    .logo-marca {
+
+        animation: none !important;
+
+        transition: none !important;
+
+    }
+
+}

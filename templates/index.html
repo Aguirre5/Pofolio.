@@ -19,13 +19,22 @@
 
         <!-- Si existe un banner en MySQL, lo mostramos. -->
 
-        {% if perfil.banner %}
+                {% if perfil.banner %}
 
-            <img class="banner-img"
-                 src="{{ perfil.banner }}"
-                 alt="Banner personal">
+                    <img class="banner-img"
+                         src="{{ perfil.banner }}"
+                         alt="">
 
-        {% endif %}
+
+                <!-- Segunda opción: imagen local. -->
+
+        {% elif banner_local %}
+
+                    <img class="banner-img"
+                         src="{{ url_for('static', filename='img/banner.webp') }}"
+                         alt="">
+
+                {% endif %}
 
 
         <!-- Elemento decorativo de inspiración floral. -->
@@ -67,17 +76,31 @@
 
     <div class="presentacion">
 
-        <!-- Fotografía recuperada desde MySQL. -->
+        <!-- Primera opción: fotografía almacenada en MySQL. -->
 
         {% if perfil.foto %}
 
             <img class="foto-perfil"
                  src="{{ perfil.foto }}"
-                 alt="Foto de {{ perfil.nombre }}">
+                 alt="Foto de {{ perfil.nombre }}"
+                 width="145"
+                 height="145">
+
+
+        <!-- Segunda opción: fotografía local. -->
+
+        {% elif foto_local %}
+
+            <img class="foto-perfil"
+                 src="{{ url_for('static', filename='img/perfil.webp') }}"
+                 alt="Foto de {{ perfil.nombre }}"
+                 width="145"
+                 height="145">
+
+
+        <!-- Tercera opción: fotografía provisoria. -->
 
         {% else %}
-
-            <!-- Imagen provisoria si no existe fotografía. -->
 
             <div class="foto-perfil foto-vacia">
 
