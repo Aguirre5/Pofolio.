@@ -25,11 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
         // Obtenemos el icono del botón.
         const icono = boton.querySelector("i");
 
-        // Cambiamos el icono según el estado.
-        icono.classList.toggle("fa-eye", !oculta);
-
-        icono.classList.toggle("fa-eye-slash", oculta);
-
         // Actualizamos los atributos de accesibilidad.
         boton.setAttribute(
             "aria-pressed",
