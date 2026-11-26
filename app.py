@@ -30,7 +30,7 @@ from tables import (
     TarjetaProyecto,
     presentar_contenido
 )
-
+#-----------------------------------------
 #Aplicación:
 
 app = Flask(__name__)
@@ -38,12 +38,40 @@ app = Flask(__name__)
 app.config.from_object(Config)
 db.init_app(app)
 
+#-----------------------------------------
 #Ruta principal Portfolio.
 
 @app.route("/")
 def index():
-    
-    return "Proyecto P. Portfolio."
+
+    # Buscamos perfil.
+    perfil = Perfil.query.order_by(
+        Perfil.id
+    ).first()
+
+    # ¿Existe?
+    if perfil is None:
+
+        return "Portfolio sin inicializar.", 503
+
+    # Devolvemos información.
+    # Flask convierte el diccionario a JSON.
+    return {
+
+        "proyecto": "Portfolio Full Stack",
+
+        "nombre": perfil.nombre,
+
+        "titulo": perfil.titulo,
+
+        "descripcion": perfil.descripcion
+
+    }
+
+
+
+
+
 
 #Conexión MYSQL prueba.
 @app.cli.command("test-db")
