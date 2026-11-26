@@ -14,17 +14,17 @@
         {% block title %}Portfolio{% endblock %}
     </title>
 
-    <!-- Favicon personalizado del portfolio. -->
-<link rel="icon"
-      type="image/svg+xml"
-      href="{{ url_for('static', filename='img/logo.svg') }}">
+        <!-- Favicon personalizado del portfolio. -->
+        <link rel="icon"
+            type="image/svg+xml"
+            href="{{ url_for('static', filename='img/logo.svg') }}">
 
-<!-- Color representativo para navegadores móviles. -->
-<meta name="theme-color" content="#111111">
+        <!-- Color representativo para navegadores móviles. -->
+        <meta name="theme-color" content="#111111">
 
-<!-- Descripción general del sitio web. -->
-<meta name="description"
-      content="Portfolio personal y profesional. Formación, habilidades, experiencia y proyectos de desarrollo.">
+        <!-- Descripción general del sitio web. -->
+        <meta name="description"
+            content="Portfolio personal y profesional. Formación, habilidades, experiencia y proyectos de desarrollo.">
 
     <!-- Bootstrap: framework de CSS. -->
     <link rel="stylesheet"
@@ -62,23 +62,23 @@
            class="marca">
 
             <!-- Logotipo vectorial personalizado. -->
-<img class="logo-marca"
-     src="{{ url_for('static', filename='img/logo.svg') }}"
-     alt="Logo del portfolio">
+            <img class="logo-marca"
+                src="{{ url_for('static', filename='img/logo.svg') }}"
+                alt="Logo del portfolio">
 
 
-<!-- Identidad del propietario. -->
-<div class="marca-identidad">
+            <!-- Identidad del propietario. -->
+            <div class="marca-identidad">
 
-    <span>PORTFOLIO.</span>
+                <span>PORTFOLIO.</span>
 
-    {% if perfil is defined %}
+                {% if perfil is defined %}
 
-        <small>{{ perfil.nombre }}</small>
+                    <small>{{ perfil.nombre }}</small>
 
-    {% endif %}
+                {% endif %}
 
-</div>
+            </div>
 
         </a>
 
@@ -86,42 +86,42 @@
 
             <!--REDES SOCIALES DEL PROPIETARIO-->
 
-{% if perfil is defined %}
+            {% if perfil is defined %}
 
-    <div class="redes-navbar">
+                <div class="redes-navbar">
 
-        {% if perfil.github %}
+                    {% if perfil.github %}
 
-            <a href="{{ perfil.github }}"
-               target="_blank"
-               rel="noopener noreferrer"
-               aria-label="GitHub"
-               title="GitHub">
+                        <a href="{{ perfil.github }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="GitHub"
+                            title="GitHub">
 
-                <i class="fa-brands fa-github"></i>
+                            <i class="fa-brands fa-github"></i>
 
-            </a>
+                        </a>
 
-        {% endif %}
+                    {% endif %}
 
 
-        {% if perfil.linkedin %}
+                    {% if perfil.linkedin %}
 
-            <a href="{{ perfil.linkedin }}"
-               target="_blank"
-               rel="noopener noreferrer"
-               aria-label="LinkedIn"
-               title="LinkedIn">
+                        <a href="{{ perfil.linkedin }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="LinkedIn"
+                            title="LinkedIn">
 
-                <i class="fa-brands fa-linkedin"></i>
+                            <i class="fa-brands fa-linkedin"></i>
 
-            </a>
+                        </a>
 
-        {% endif %}
+                    {% endif %}
 
-    </div>
+                </div>
 
-{% endif %}
+            {% endif %}
 
             <!-- Jinja2 comprueba si existe una sesión. -->
             {% if current_user.is_authenticated %}
@@ -210,10 +210,75 @@
 
     </footer>
 
+<!-- =====================================
+     VENTANA MODAL DE ADMINISTRACIÓN
+     ===================================== -->
 
+    {% if current_user.is_authenticated %}
+
+        <div class="modal fade"
+            id="modalEdicion"
+            tabindex="-1"
+            aria-labelledby="tituloModal"
+            aria-hidden="true">
+
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+
+                <div class="modal-content modal-portfolio">
+
+                <!-- Encabezado de la ventana. -->
+
+                    <div class="modal-header">
+
+                        <h2 class="modal-title fs-5"
+                            id="tituloModal">
+
+                        Administrar contenido
+
+                        </h2>
+
+                        <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Cerrar">
+
+                        </button>
+
+                    </div>
+
+
+                <!-- Contenedor del formulario. -->
+
+                    <div class="modal-body">
+
+                        <iframe
+                            id="frameEdicion"
+                            title="Formulario de administración"
+                            data-completa="{{ url_for('edicion_completa') }}"
+                            data-login="{{ url_for('login') }}"
+                            src="about:blank">
+
+                        </iframe>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    {% endif %}
+
+
+    
     <!-- JavaScript de Bootstrap. -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
     </script>
+
+    <!-- Funcionalidades de administración. -->
+    <script src="{{ url_for('static', filename='js/main.js') }}">
+    </script>
+
 
 </body>
 

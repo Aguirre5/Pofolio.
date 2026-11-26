@@ -10,6 +10,82 @@
 
 {% block content %}
 
+<!-- =====================================
+     MACRO PARA AGREGAR REGISTROS
+     ===================================== -->
+
+{% macro boton_agregar(seccion) %}
+
+    {% if current_user.is_authenticated %}
+
+        <a href="{{ url_for('agregar', seccion=seccion) }}"
+           class="btn-icono btn-agregar"
+           data-editar
+           title="Agregar elemento"
+           aria-label="Agregar elemento">
+
+            <i class="fa-solid fa-plus"></i>
+
+        </a>
+
+    {% endif %}
+
+{% endmacro %}
+
+
+<!-- =====================================
+     MACRO PARA EDITAR Y ELIMINAR REGISTROS
+     ===================================== -->
+
+{% macro controles(seccion, id) %}
+
+    {% if current_user.is_authenticated %}
+
+        <div class="controles">
+
+            <!-- Botón de edición. -->
+
+            <a href="{{ url_for('editar', seccion=seccion, id=id) }}"
+               class="btn-icono"
+               data-editar
+               title="Editar elemento"
+               aria-label="Editar elemento">
+
+                <i class="fa-solid fa-pencil"></i>
+
+            </a>
+
+
+            <!-- Formulario protegido de eliminación. -->
+
+            <form method="POST"
+                  action="{{ url_for('eliminar', seccion=seccion, id=id) }}"
+                  class="form-eliminar">
+
+                <!-- Token CSRF de seguridad. -->
+
+                <input type="hidden"
+                       name="csrf_token"
+                       value="{{ csrf_token() }}">
+
+
+                <button type="submit"
+                        class="btn-icono eliminar"
+                        title="Eliminar elemento"
+                        aria-label="Eliminar elemento">
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                </button>
+
+            </form>
+
+        </div>
+
+    {% endif %}
+
+{% endmacro %}
+
 
 <!--Principio.-->
 
@@ -17,24 +93,39 @@
 
     <div class="banner">
 
+        <!-- Permite modificar el banner desde el perfil. -->
+
+        {% if current_user.is_authenticated %}
+
+            <a href="{{ url_for('editar_perfil') }}"
+               class="btn-icono editar-banner"
+               data-editar
+               title="Editar banner"
+               aria-label="Editar banner">
+
+                <i class="fa-solid fa-pencil"></i>
+
+            </a>
+
+        {% endif %}
+
         <!-- Si existe un banner en MySQL, lo mostramos. -->
 
-                {% if perfil.banner %}
+        {% if perfil.banner %}
 
-                    <img class="banner-img"
-                         src="{{ perfil.banner }}"
-                         alt="">
+            <img class="banner-img"
+                 src="{{ perfil.banner }}"
+                 alt="">
 
-
-                <!-- Segunda opción: imagen local. -->
+        <!-- Segunda opción: imagen local. -->
 
         {% elif banner_local %}
 
-                    <img class="banner-img"
-                         src="{{ url_for('static', filename='img/banner.webp') }}"
-                         alt="">
+            <img class="banner-img"
+                 src="{{ url_for('static', filename='img/banner.webp') }}"
+                 alt="">
 
-                {% endif %}
+        {% endif %}
 
 
         <!-- Elemento decorativo de inspiración floral. -->
@@ -86,7 +177,6 @@
                  width="145"
                  height="145">
 
-
         <!-- Segunda opción: fotografía local. -->
 
         {% elif foto_local %}
@@ -96,7 +186,6 @@
                  alt="Foto de {{ perfil.nombre }}"
                  width="145"
                  height="145">
-
 
         <!-- Tercera opción: fotografía provisoria. -->
 
@@ -112,6 +201,22 @@
 
 
         <div class="informacion-personal">
+
+            <!-- Edición de información personal y fotografía. -->
+
+            {% if current_user.is_authenticated %}
+
+                <a href="{{ url_for('editar_perfil') }}"
+                   class="btn-dark-custom btn-editar-perfil"
+                   data-editar>
+
+                    <i class="fa-solid fa-pencil"></i>
+
+                    Editar perfil
+
+                </a>
+
+            {% endif %}
 
             <span class="etiqueta">
 
@@ -232,7 +337,23 @@
 
         </div>
 
-        <i class="fa-regular fa-address-card icono-seccion"></i>
+        {% if current_user.is_authenticated %}
+
+            <a href="{{ url_for('editar_perfil') }}"
+               class="btn-icono"
+               data-editar
+               title="Editar presentación"
+               aria-label="Editar presentación">
+
+                <i class="fa-solid fa-pencil"></i>
+
+            </a>
+
+        {% else %}
+
+            <i class="fa-regular fa-address-card icono-seccion"></i>
+
+        {% endif %}
 
     </div>
 
@@ -253,7 +374,7 @@
 <!-- Una macro permite reutilizar una estructura
      HTML sin escribir el mismo código varias veces. -->
 
-{% macro mostrar_tarjetas(elementos, icono, mensaje) %}
+{% macro mostrar_tarjetas(seccion, elementos, icono, mensaje) %}
 
     <div class="tarjetas-grid">
 
@@ -342,6 +463,8 @@
 
                     {% endif %}
 
+                    {{ controles(seccion, item.id) }}
+
                 </div>
 
             </article>
@@ -379,7 +502,15 @@
 
         </div>
 
-        <i class="fa-solid fa-briefcase icono-seccion"></i>
+        {% if current_user.is_authenticated %}
+
+            {{ boton_agregar("experiencias") }}
+
+        {% else %}
+
+            <i class="fa-solid fa-briefcase icono-seccion"></i>
+
+        {% endif %}
 
     </div>
 
@@ -387,6 +518,7 @@
     <!-- Reutilizamos nuestra macro de tarjetas. -->
 
     {{ mostrar_tarjetas(
+        "experiencia",
         tarjetas["experiencias"],
         "fa-solid fa-briefcase",
         "Todavía no hay experiencias laborales publicadas."
@@ -409,12 +541,21 @@
 
         </div>
 
-        <i class="fa-solid fa-graduation-cap icono-seccion"></i>
+        {% if current_user.is_authenticated %}
+
+            {{ boton_agregar("educacion") }}
+
+        {% else %}
+
+            <i class="fa-solid fa-graduation-cap icono-seccion"></i>
+
+        {% endif %}
 
     </div>
 
 
     {{ mostrar_tarjetas(
+        "educación",
         tarjetas["educacion"],
         "fa-solid fa-graduation-cap",
         "Todavía no hay estudios publicados."
@@ -437,7 +578,15 @@
 
         </div>
 
-        <i class="fa-solid fa-chart-simple icono-seccion"></i>
+        {% if current_user.is_authenticated %}
+
+            {{ boton_agregar("habilidades") }}
+
+        {% else %}
+
+            <i class="fa-solid fa-chart-simple icono-seccion"></i>
+
+        {% endif %}
 
     </div>
 
@@ -445,13 +594,9 @@
     <!-- Recorremos los tres tipos de habilidades. -->
 
     {% for tipo, titulo in [
-
         ("hard", "Hard Skills"),
-
         ("soft", "Soft Skills"),
-
         ("idioma", "Idiomas")
-
     ] %}
 
         <h3 class="titulo-habilidades">
@@ -484,6 +629,10 @@
                     </div>
 
                     <h4>{{ habilidad.nombre }}</h4>
+
+                    <!-- Controles de edición y eliminación. -->
+
+                    {{ controles("habilidades", habilidad.id) }}
 
                 </article>
 
@@ -521,12 +670,21 @@
 
         </div>
 
-        <i class="fa-solid fa-code icono-seccion"></i>
+        {% if current_user.is_authenticated %}
+
+            {{ boton_agregar("proyectos") }}
+
+        {% else %}
+
+            <i class="fa-solid fa-code icono-seccion"></i>
+
+        {% endif %}
 
     </div>
 
 
     {{ mostrar_tarjetas(
+        "proyectos",
         tarjetas["proyectos"],
         "fa-solid fa-laptop-code",
         "Todavía no hay proyectos publicados."

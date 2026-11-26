@@ -7,7 +7,8 @@ from flask import (
     redirect,
     url_for,
     flash,
-    abort
+    abort,
+    request
 )
 
 # Herramientas para administrar sesiones de usuarios.
@@ -23,7 +24,18 @@ from flask_login import (
 from flask_wtf.csrf import CSRFProtect
 
 # Importamos nuestros formularios.
-from forms import LoginForm, AccionForm
+from forms import (
+    LoginForm,
+    AccionForm,
+    PerfilForm,
+    ExperienciaForm,
+    EducacionForm,
+    HabilidadForm,
+    ProyectoForm
+)
+
+# Permite controlar errores de la base de datos.
+from sqlalchemy.exc import SQLAlchemyError
 
 # Herram. SQLAlchemy.
 from sqlalchemy import text, inspect
@@ -105,6 +117,49 @@ def cargar_usuario(usuario_id):
     except (ValueError, TypeError):
 
         return None
+
+
+# ==========================================
+# CONFIGURACIÓN DE LAS SECCIONES CRUD
+# ==========================================
+
+# Cada sección tiene asociado:
+# 1. Su modelo de MySQL.
+# 2. Su formulario Flask-WTF.
+# 3. Su nombre descriptivo.
+# 4. Su identificador dentro del HTML.
+
+SECCIONES = {
+
+    "experiencias": (
+        Experiencia,
+        ExperienciaForm,
+        "experiencia laboral",
+        "experiencia"
+    ),
+
+    "educacion": (
+        Educacion,
+        EducacionForm,
+        "formación académica",
+        "educacion"
+    ),
+
+    "habilidades": (
+        Habilidad,
+        HabilidadForm,
+        "habilidad",
+        "habilidades"
+    ),
+
+    "proyectos": (
+        Proyecto,
+        ProyectoForm,
+        "proyecto",
+        "proyectos"
+    )
+
+}
 
 
 #-----------------------------------------
@@ -623,6 +678,329 @@ def panel():
         "usuario": current_user.username,
         "modo": "Administrador"
     }
+
+
+# ==========================================
+# FUNCIONES AUXILIARES DEL CRUD
+# ==========================================
+
+def actualizar_datos(registro, form):
+
+    # Recorremos los campos definidos
+    # por nuestros formularios Flask-WTF.
+
+    for campo in form:
+
+        # Excluimos los campos que no pertenecen
+        # a las columnas de MySQL.
+
+        if campo.name in ("csrf_token", "submit"):
+            continue
+
+        valor = campo.data
+
+        # Limpiamos espacios innecesarios.
+        if isinstance(valor, str):
+
+            valor = valor.strip()
+
+            # Los campos opcionales vacíos
+            # se almacenarán como NULL.
+            if valor == "":
+                valor = None
+
+        # Actualizamos el atributo correspondiente.
+        setattr(registro, campo.name, valor)
+
+
+def guardar_cambios():
+
+    try:
+
+        # Confirmamos la transacción en MySQL.
+        db.session.commit()
+
+        return True
+
+    except SQLAlchemyError:
+
+        # Revertimos los cambios si ocurre un error.
+        db.session.rollback()
+
+        flash(
+            "No se pudieron guardar los cambios.",
+            "danger"
+        )
+
+        return False
+
+
+def finalizar_edicion(ancla):
+
+    # Si estamos utilizando una ventana modal,
+    # mostramos una página de confirmación especial.
+    if request.args.get("modal") == "1":
+
+        return redirect(
+            url_for(
+                "edicion_completa",
+                seccion=ancla
+            )
+        )
+
+    # Si el formulario se abrió directamente,
+    # regresamos al portfolio.
+    return redirect(
+        url_for("index", _anchor=ancla)
+    )
+
+# ==========================================
+# EDITAR PERFIL PERSONAL
+# ==========================================
+
+@app.route(
+    "/perfil/editar",
+    methods=["GET", "POST"]
+)
+@login_required
+def editar_perfil():
+
+    # Buscamos únicamente el perfil perteneciente
+    # al usuario que inició sesión.
+    perfil = Perfil.query.filter_by(
+        usuario_id=current_user.id
+    ).first_or_404()
+
+    # obj=perfil carga automáticamente los datos
+    # actuales de MySQL dentro del formulario.
+    form = PerfilForm(obj=perfil)
+
+    # Procesamos el formulario cuando se envía.
+    if form.validate_on_submit():
+
+        actualizar_datos(perfil, form)
+
+        if guardar_cambios():
+
+            flash(
+                "Perfil actualizado correctamente.",
+                "success"
+            )
+
+            return finalizar_edicion("acerca")
+
+    # Mostramos el formulario de edición.
+    return render_template(
+
+        "formulario.html",
+
+        form=form,
+
+        titulo="Editar perfil personal",
+
+        ancla="acerca"
+
+    )
+
+
+# ==========================================
+# CREATE: AGREGAR CONTENIDO
+# ==========================================
+
+@app.route(
+    "/<seccion>/agregar",
+    methods=["GET", "POST"]
+)
+@login_required
+def agregar(seccion):
+
+    # Comprobamos que la sección solicitada exista.
+    if seccion not in SECCIONES:
+
+        abort(404)
+
+    # Recuperamos la configuración correspondiente.
+    modelo, formulario, nombre, ancla = SECCIONES[seccion]
+
+    # Creamos el formulario vacío.
+    form = formulario()
+
+    if form.validate_on_submit():
+
+        # Creamos un nuevo objeto del modelo.
+        registro = modelo()
+
+        # Asignamos los datos ingresados.
+        actualizar_datos(registro, form)
+
+        # Vinculamos el registro al administrador.
+        registro.usuario_id = current_user.id
+
+        # Agregamos el objeto a SQLAlchemy.
+        db.session.add(registro)
+
+        # Guardamos el registro en MySQL.
+        if guardar_cambios():
+
+            flash(
+                "Elemento agregado correctamente.",
+                "success"
+            )
+
+            return finalizar_edicion(ancla)
+
+    return render_template(
+
+        "formulario.html",
+
+        form=form,
+
+        titulo=f"Agregar {nombre}",
+
+        ancla=ancla
+
+    )
+
+# ==========================================
+# UPDATE: MODIFICAR CONTENIDO
+# ==========================================
+
+@app.route(
+    "/<seccion>/editar/<int:id>",
+    methods=["GET", "POST"]
+)
+@login_required
+def editar(seccion, id):
+
+    # Validamos la sección solicitada.
+    if seccion not in SECCIONES:
+
+        abort(404)
+
+    modelo, formulario, nombre, ancla = SECCIONES[seccion]
+
+    # Buscamos el registro por su clave primaria
+    # y comprobamos que pertenezca al usuario actual.
+    registro = modelo.query.filter_by(
+
+        id=id,
+
+        usuario_id=current_user.id
+
+    ).first_or_404()
+
+    # Cargamos los datos existentes en el formulario.
+    form = formulario(obj=registro)
+
+    if form.validate_on_submit():
+
+        actualizar_datos(registro, form)
+
+        if guardar_cambios():
+
+            flash(
+                "Elemento actualizado correctamente.",
+                "success"
+            )
+
+            return finalizar_edicion(ancla)
+
+    return render_template(
+
+        "formulario.html",
+
+        form=form,
+
+        titulo=f"Editar {nombre}",
+
+        ancla=ancla
+
+    )
+
+
+# ==========================================
+# DELETE: ELIMINAR CONTENIDO
+# ==========================================
+
+@app.route(
+    "/<seccion>/eliminar/<int:id>",
+    methods=["POST"]
+)
+@login_required
+def eliminar(seccion, id):
+
+    if seccion not in SECCIONES:
+
+        abort(404)
+
+    # Validamos el token CSRF.
+    form = AccionForm()
+
+    if not form.validate_on_submit():
+
+        abort(400)
+
+    modelo, formulario, nombre, ancla = SECCIONES[seccion]
+
+    # Buscamos solamente registros pertenecientes
+    # al administrador autenticado.
+    registro = modelo.query.filter_by(
+
+        id=id,
+
+        usuario_id=current_user.id
+
+    ).first_or_404()
+
+    # Marcamos el registro para su eliminación.
+    db.session.delete(registro)
+
+    if guardar_cambios():
+
+        flash(
+            "Elemento eliminado correctamente.",
+            "success"
+        )
+
+    return redirect(
+        url_for("index", _anchor=ancla)
+    )
+
+# ==========================================
+# CONFIRMACIÓN DE EDICIÓN MEDIANTE MODAL
+# ==========================================
+
+@app.route("/edicion/completa")
+@login_required
+def edicion_completa():
+
+    # Recuperamos la sección que fue modificada.
+    seccion = request.args.get("seccion", "acerca")
+
+    # Solamente aceptamos identificadores conocidos.
+    permitidas = {
+        "acerca",
+        "experiencia",
+        "educacion",
+        "habilidades",
+        "proyectos"
+    }
+
+    if seccion not in permitidas:
+
+        seccion = "acerca"
+
+    return render_template(
+
+        "edicion_completa.html",
+
+        destino=url_for(
+            "index",
+            _anchor=seccion
+        )
+
+    )
+
 
 #Ejecución servidor.
 

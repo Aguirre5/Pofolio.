@@ -1874,3 +1874,442 @@ html {
     }
 
 }
+
+/* ==========================================
+   36. BOTONES DE ADMINISTRACIÓN
+   ========================================== */
+
+.btn-icono {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 38px;
+
+    height: 38px;
+
+    flex-shrink: 0;
+
+    background: white;
+
+    color: var(--negro);
+
+    border: 1px solid #bcbcbc;
+
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    font-size: 15px;
+
+    /* DINAMISMO VISUAL:
+       Transición de color, sombra y posición. */
+
+    transition:
+
+        background 0.25s ease,
+
+        color 0.25s ease,
+
+        transform 0.25s ease,
+
+        box-shadow 0.25s ease;
+
+}
+
+.btn-icono:hover {
+
+    background: var(--rosa);
+
+    color: var(--negro);
+
+    transform: translateY(-3px);
+
+    box-shadow: 3px 4px 0 #0002;
+
+}
+
+
+/* Botón de agregar elementos. */
+
+.btn-agregar {
+
+    background: var(--negro);
+
+    color: white;
+
+    border-color: var(--negro);
+
+}
+
+.btn-agregar:hover {
+
+    background: var(--verde);
+
+    color: white;
+
+}
+
+
+/* Botón de eliminación. */
+
+.eliminar:hover {
+
+    background: #713b47;
+
+    color: white;
+
+    border-color: #713b47;
+
+}
+
+
+/* ==========================================
+   37. CONTROLES DE LAS TARJETAS
+   ========================================== */
+
+.controles {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    align-items: center;
+
+    gap: 9px;
+
+    width: 100%;
+
+    margin-top: 20px;
+
+    padding-top: 15px;
+
+    border-top: 1px solid var(--gris-claro);
+
+}
+
+.form-eliminar {
+
+    margin: 0;
+
+}
+
+.habilidad .controles {
+
+    justify-content: center;
+
+}
+
+.habilidad .btn-icono {
+
+    width: 33px;
+
+    height: 33px;
+
+    font-size: 13px;
+
+}
+
+
+/* ==========================================
+   38. EDICIÓN DEL BANNER Y PERFIL
+   ========================================== */
+
+.editar-banner {
+
+    position: absolute;
+
+    top: 20px;
+
+    right: 20px;
+
+    z-index: 3;
+
+    width: 42px;
+
+    height: 42px;
+
+    box-shadow: 3px 4px 0 #0004;
+
+}
+
+.btn-editar-perfil {
+
+    margin-bottom: 20px;
+
+}
+
+
+/* ==========================================
+   39. VENTANAS MODALES
+   ========================================== */
+
+.modal-portfolio {
+
+    border: 1px solid #bcbcbc;
+
+    border-radius: 3px;
+
+    background: white;
+
+    /* Sombra pronunciada del diseño. */
+
+    box-shadow: 12px 12px 0 #0005;
+
+}
+
+.modal-header {
+
+    padding: 20px 25px;
+
+    border-bottom: 1px solid var(--gris-claro);
+
+    background: var(--floral);
+
+}
+
+.modal-title {
+
+    font-family: "Playfair Display", Georgia, serif;
+
+}
+
+.modal-body {
+
+    padding: 0;
+
+}
+
+#frameEdicion {
+
+    display: block;
+
+    width: 100%;
+
+    height: min(68vh, 650px);
+
+    border: none;
+
+    background: white;
+
+}
+
+
+/* ==========================================
+   40. FORMULARIOS DE ADMINISTRACIÓN
+   ========================================== */
+
+.formulario-body {
+
+    display: block;
+
+    min-height: 100vh;
+
+    margin: 0;
+
+    background: white;
+
+    color: var(--negro);
+
+}
+
+.formulario-card {
+
+    padding: 35px;
+
+    background: white;
+
+}
+
+.formulario-card h1 {
+
+    font-size: clamp(27px, 5vw, 38px);
+
+    margin-bottom: 18px;
+
+}
+
+.formulario-card textarea {
+
+    resize: vertical;
+
+    min-height: 120px;
+
+}
+
+.formulario-card .form-control,
+
+.formulario-card .form-select {
+
+    padding: 12px;
+
+    border: 1px solid #bcbcbc;
+
+    border-radius: 3px;
+
+}
+
+.formulario-card .form-select:focus {
+
+    border-color: var(--verde);
+
+    box-shadow: 0 0 0 3px #283e3520;
+
+}
+
+
+/* ==========================================
+   41. MENSAJES DE VALIDACIÓN
+   ========================================== */
+
+.error-campo {
+
+    display: block;
+
+    color: #713b47;
+
+    font-size: 12px;
+
+    margin-top: 6px;
+
+}
+
+
+/* ==========================================
+   42. BOTONES DE LOS FORMULARIOS
+   ========================================== */
+
+.acciones-formulario {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-top: 25px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid var(--gris-claro);
+
+}
+
+.btn-secundario {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 12px 20px;
+
+    background: white;
+
+    color: var(--negro);
+
+    border: 1px solid #bcbcbc;
+
+    border-radius: 4px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    transition: background 0.25s;
+
+}
+
+.btn-secundario:hover {
+
+    background: var(--gris-claro);
+
+    color: var(--negro);
+
+}
+
+
+/* ==========================================
+   43. BOTONES EN LA SECCIÓN OSCURA
+   ========================================== */
+
+.seccion-proyectos .btn-agregar {
+
+    background: white;
+
+    color: var(--negro);
+
+    border-color: white;
+
+}
+
+.seccion-proyectos .btn-agregar:hover {
+
+    background: var(--rosa);
+
+}
+
+
+/* ==========================================
+   44. CRUD RESPONSIVE
+   ========================================== */
+
+@media (max-width: 575px) {
+
+    .formulario-card {
+
+        padding: 22px;
+
+    }
+
+    .modal-header {
+
+        padding: 15px;
+
+    }
+
+    .modal-portfolio {
+
+        box-shadow: 5px 5px 0 #0004;
+
+    }
+
+    #frameEdicion {
+
+        height: 65vh;
+
+    }
+
+    .editar-banner {
+
+        top: 12px;
+
+        right: 12px;
+
+        width: 34px;
+
+        height: 34px;
+
+    }
+
+    .acciones-formulario {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+    .controles {
+
+        gap: 6px;
+
+    }
+
+}

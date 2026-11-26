@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Edición completada</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body class="formulario-body">
+
+    <!-- JavaScript detectará esta página y
+         actualizará automáticamente el portfolio. -->
+
+    <section class="formulario-card">
+
+        <h2>Cambios guardados.</h2>
+
+        <p>La información fue actualizada correctamente.</p>
+
+        <!-- Alternativa si JavaScript está desactivado. -->
+
+        <a href="{{ destino }}"
+           target="_top"
+           class="btn-dark-custom">
+
+            Volver al portfolio
+
+        </a>
+
+    </section>
+
+</body>
+
+</html>
